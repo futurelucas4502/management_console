@@ -1,0 +1,52 @@
+{
+  "name": "management-console",
+  "productName": "The City Of Truro Mariners - Management Console",
+  "version": "1.0.25",
+  "license": "MIT",
+  "author": "Lucas Wilson <lucaswilson4502@outlook.com>",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "postinstall": "electron-builder install-app-deps",
+    "pack": "electron-builder --dir --publish never",
+    "create-installer-win": "electron-builder build --win --publish never",
+    "deploy": "electron-builder build --win --publish always",
+    "auto-git": "git add . && git commit -m Auto && npm version patch && git push",
+    "win-mac": "electron-builder build --win --mac --publish always"
+  },
+  "build": {
+    "appId": "com.electron.managementconsole",
+    "win": {
+      "target": "NSIS",
+      "icon": "build/icon-win.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.productivity",
+      "icon": "build/icon-mac.png"
+    },
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "https://lucas-testing.000webhostapp.com/release/"
+      }
+    ]
+  },
+  "devDependencies": {
+    "electron": "^8.2.1",
+    "electron-builder": "^22.4.1"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "bootstrap": "^4.4.1",
+    "electron-context-menu": "^1.0.0",
+    "electron-is-dev": "^1.2.0",
+    "electron-log": "^4.1.1",
+    "electron-updater": "^4.2.5",
+    "jquery": "^3.5.0",
+    "keytar": "^5.5.0",
+    "moment": "^2.24.0",
+    "popper.js": "^1.16.1",
+    "request": "^2.88.2"
+  }
+}

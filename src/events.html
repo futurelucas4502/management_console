@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; connect-src 'self' 'unsafe-inline' https://api.stripe.com; frame-src 'self' 'unsafe-inline' https://js.stripe.com https://hooks.stripe.com; script-src 'self' 'unsafe-inline' https://js.stripe.com">
+    <link rel="preload" href="../assets/images/embelem.webp" as="image">
+    <link rel="preload" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" as="style">
+    <link rel="preload" href="../assets/css/index.css" as="style">
+    <link rel="preload" href="../assets/css/floating-labels.css" as="style">
+    <link rel="preload" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css" as="style">
+    <link rel="preload" href="../assets/css/tempusdominus-bootstrap-4.min.css" as="style">
+    <link href="../assets/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet">
+    <link href="../assets/css/index.css" rel="stylesheet">
+    <link href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/floating-labels.css" rel="stylesheet">
+    <title>Events</title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-1 d-flex justify-content-center">
+          <div id="mySidenav" class="sidenav">
+            <div id="payments">
+              <a style="display: inline-block;padding-right:8px" href="./payments.html">Payments</a>
+              <i style="color: #818181!important;font-size: 17.5px;cursor:pointer;" class="fa fa-chevron-right"></i>
+            </div>
+            <div id="dropdown3" style="overflow:hidden;padding: 0;display:none;" aria-labelledby="payments">
+              <a style="cursor:pointer;background-color: #F0F0F0" onclick="addMembershipPayment()" data-toggle="modal" data-target="#MembershipPayment">Add membership payment</a>
+              </div>
+              <a id="accounting" href="./accounting.html">Accounting</a>
+            <div id="members">
+              <a style="display: inline-block;padding-right:8px" href="./members.html">Members</a>
+              <i style="color: #818181!important;font-size: 17.5px;cursor:pointer;" class="fa fa-chevron-right"></i>
+            </div>
+            <div id="dropdown1" style="overflow:hidden;padding: 0;display:none;" aria-labelledby="members">
+              <a style="cursor:pointer;background-color: #F0F0F0" onclick="addMembers()" data-toggle="modal" data-target="#addMemberModal">Add member</a>
+              </div>
+            <div id="events">
+              <a style="display: inline-block;padding-right:8px" href="./events.html">Events</a>
+              <i style="color: #818181!important;font-size: 17.5px;cursor:pointer;" class="fa fa-chevron-right"></i>
+            </div>
+            <div id="dropdown2" style="overflow:hidden;padding: 0;display:none;" aria-labelledby="events">
+              <a style="cursor:pointer;background-color: #F0F0F0" onclick="addEvent()" data-toggle="modal" data-target="#addEventModal">Add event</a>
+              </div>
+            <a href="./main.html">Main</a>
+            <a href="./messaging.html">Messaging</a>
+            <a href="./settings.html">Settings</a>
+            <a class="logoutbtn abs-center-x" onclick="Logout()" id="logoutBtn" style="bottom: 10px;">Logout</a>
+          </div>
+        </div>
+      </div>
+
+<!--Navbar-->
+<nav class="navbar navbar-light bg-light sticky-top" style="box-shadow: 0px 0px 8px #888888;">
+  <!-- Collapse button -->
+  <button class="navbar-toggler hamburger-button" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation" onclick="Nav()" style="z-index: 2"><div class="animated-icon"><span></span><span></span><span></span></div></button>
+  <!-- Navbar brand -->
+  <div class="mx-auto order-0 abs-center-x">
+    <a class="navbar-brand mx-auto" href="./events.html">Events</a>
+</div>
+  <img src="../assets/images/embelem.webp" alt="Embelem" width="40" height="40">
+</nav>
+<!--/.Navbar-->
+<a id="totalEvents" style="float:left;padding: 0.75rem;text-decoration: none;font-size: 25px;color: #818181!important;"></a>
+<!-- Button trigger add modal -->
+<button id="addEvent" type="button" onclick="addEvent()" class="btn btn-success" style="float:right;margin: 8px 8px 8px 8px;display:none!important;padding:.75rem;" data-toggle="modal" data-target="#addEventModal">Add event</button>
+
+<!-- Search -->
+<div id="SearchBox" class="form-label-group" style=" float: right; margin: 8px 0px 8px; position: relative; display: none;">
+  <input id="SearchBoxInput" class="form-control" placeholder="Event Search">
+  <label for="SearchBoxInput">Event Search...</label>
+</div>
+
+<!-- Add member modal -->
+<div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="addMemberModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addMemberModalLabel">Add member</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="addMember" onsubmit="memberAdd()">
+          <div class="form-group">
+              <label for="usernameInput">Username</label>
+              <input type="username" class="form-control" id="usernameInput" required="true" placeholder="Username">
+            </div>
+          <div class="form-group">
+            <label for="emailInput">Email address</label>
+            <input type="email" class="form-control" id="emailInput" required="true" placeholder="name@example.com">
+          </div>
+          <div class="form-group">
+            <label for="userType">User type</label>
+            <select class="form-control" id="userType">
+              <option>Standard</option>
+              <option>Admin</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" id="password" type="text" placeholder="" readonly>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End add member modal -->
+
+<!-- Add event modal -->
+<div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="addEventModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addEventModalLabel">Add event</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="addEventModal" onsubmit="eventAdd()">
+          <div class="form-group">
+              <label for="titleInput">Title</label>
+              <input type="text" class="form-control" id="titleInput" required="true" placeholder="Title">
+            </div>
+          <div class="form-group">
+            <label for="descriptionInput">Description</label>
+            <textarea class="form-control" id="descriptionInput" required="true" placeholder="Description"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="datetimepicker1">Date and Time</label>
+            <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+              <input placeholder="" type="text" id="datetimeInput" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+              <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="locationInput">Location</label>
+            <input class="form-control" id="locationInput" type="text" required="true" placeholder="Location">
+          </div>
+          <div id="approved-selection" class="form-group">
+            <label for="approvedInput">Approved?</label>
+            <select class="form-control" id="approvedInput">
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End add event modal -->
+
+<div id="table"><a class="abs-center-x" style="padding: 8px;font-size: 25px;color: #818181!important;"><span class="spinner-border m-1" style="width: 1.25rem;height: 1.25rem;border-width: .2rem;" role="status" aria-hidden="true"></span>Loading...</a></div>
+
+<!-- Edit event modal -->
+<div class="modal fade" id="editEventModal" tabindex="-1" role="dialog" aria-labelledby="editEventModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editEventModalTitle">Edit event</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form name="editEventForm" onsubmit="editEventConfirm()">
+            <div class="form-group">
+              <label for="titleEdit">Title</label>
+              <input type="text" class="form-control" id="titleEdit" required="true" placeholder="Title">
+            </div>
+            <div id="eventID" style="display:none;"></div>
+            <div class="form-group">
+              <label for="descriptionEdit">Description</label>
+              <textarea class="form-control" id="descriptionEdit" required="true" placeholder="Description"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="datetimepicker2">Date and Time</label>
+              <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                <input placeholder="" type="text" id="datetimeEdit" class="form-control datetimepicker-input" data-target="#datetimepicker2"/>
+                <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="locationEdit">Location</label>
+              <input class="form-control" id="locationEdit" type="text" required="true" placeholder="Location">
+            </div>
+            <div class="form-group">
+              <label for="approvedEdit">Approved?</label>
+              <select class="form-control" id="approvedEdit">
+                <option>No</option>
+                <option>Yes</option>
+              </select>
+            </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Edit</button>
+              </div>
+            </form>
+          </div>
+    </div>
+  </div>
+</div>
+<!-- End edit event modal -->
+
+<!-- Delete event modal -->
+<div class="modal fade" id="deleteEventModal" tabindex="-1" role="dialog" aria-labelledby="deleteEventModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteEventModalTitle">Are you sure you want to delete the event "<span id="deleteevent"></span>"?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form name="deleteEvent" onsubmit="deleteEventConfirm();return false">
+            <div class="form-group">
+              <label for="confirmPassword">Enter your password:</label>
+              <input type="password" class="form-control" id="confirmPassword">
+            </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Delete</button>
+              </div>
+            </form>
+          </div>
+    </div>
+  </div>
+</div>
+<!-- End delete event modal -->
+
+<!-- Membership Payment modal -->
+<div class="modal fade" id="MembershipPayment" tabindex="-1" role="dialog" aria-labelledby="MembershipPaymentLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="MembershipPaymentLabel">Membership Payment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Stripe payment stuff start -->
+        <form id="payment-form">
+          <div class="form-group">
+            <label for="Name">Card Holder Name</label>
+            <input type="text" class="form-control" id="Name" placeholder="Enter the name on the card..." required>
+          </div>
+
+          <label for="card-element">
+            Credit or debit card
+          </label>
+          <div id="card-element">
+            <!-- Elements will create input elements here -->
+          </div>
+
+          <div id="card-errors" style="color: red;font-size: small;" role="alert">
+            <!-- We'll put the error messages in this element -->
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="submit" type="submit" class="btn btn-primary" value="Submit Payment">Pay</button>
+        </div>
+        </form>
+        <!-- End Stripe Stuff -->
+    </div>
+  </div>
+</div>
+<!-- End Membership Payment modal -->
+
+<tint id="tint" class="tinthidden" onclick="tint()"></tint>
+    <!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="./js/index.js"></script>
+</body>
+</html>

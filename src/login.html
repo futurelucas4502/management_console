@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'">
+  <link rel="preload" href="../assets/images/embelem.webp" as="image">
+  <link rel="preload" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" as="style">
+  <link rel="preload" href="../assets/images/background.webp" as="image">
+  <link rel="preload" href="../assets/css/signin.css" as="style">
+  <link rel="preload" href="../assets/css/floating-labels.css" as="style">
+  <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/css/signin.css" rel="stylesheet">
+  <link href="../assets/css/floating-labels.css" rel="stylesheet">
+  <title>Login</title>
+</head>
+
+<body>
+  <div id="notification" class="hidden">
+    <p id="message"></p>
+    <button id="close-button" onClick="closeNotification()">
+      Close
+    </button>
+    <button id="restart-button" class="hidden" onClick="restartApp()">
+      Restart
+    </button>
+  </div>
+    <div class="text-center">
+        <div class="rowcus">
+            <div class="card card-signin my-5">
+              <div class="card-body">
+                <form method="submit" onsubmit="login();return false" class="form-signin">
+                  <img class="mb-4" src="../assets/images/embelem.webp" alt="Embelem" width="72" height="72">
+                  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                  <div class="form-label-group">
+                    <input id="username" class="mb-3 form-control" placeholder="Username" required="" autofocus="true">
+                    <label for="username">Username</label>
+                  </div>
+                  <div class="form-label-group">
+                    <input type="password" id="password" class="mb-3 form-control" placeholder="Password" required="" autofocus="true">
+                    <label for="password">Password</label>
+                  </div>
+                  <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">Remember Me</label>
+                  </div>
+                  <button type="submit" id="loginbutton" class="btn btn-lg btn-primary btn-block">Sign in</button>
+                  <div class="form-label-group mb-3 mt-3">
+                    <a href="./forgotPassword.html" class="mb-3 forgot-pass">Forgot Password</a>
+                  </div>
+                  <div class="form-label-group mb-3 mt-3">
+                    <a href="./requestAccess.html" class="mb-3 forgot-pass">Request Access</a>
+                  </div>
+                  <p class="mt-4 mb-2 text-muted">© 2002-2020</p>
+                </form>
+              </div>
+        </div>
+    </div>
+  </div>
+    <!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="./js/index.js"></script>
+  </body>
+</html>

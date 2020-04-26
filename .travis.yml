@@ -1,0 +1,24 @@
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode10.2
+      language: node_js
+      node_js: "12"
+
+script:
+  - npm install
+  - npm run win-mac
+  - cd dist
+  - rm -rf win-unpacked
+  - rm -rf mac
+  - cd ..
+  - find dist -type f -exec curl --ftp-create-dirs -T {} ftp://$FTP_USER:$FTP_PASS@$FTP_SERVER/public_html/release/ \;
+
+after_success:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh success $WEBHOOK_URL
+after_failure:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh failure $WEBHOOK_URL

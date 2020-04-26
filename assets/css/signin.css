@@ -1,0 +1,87 @@
+html, body {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: url("../images/background.webp");
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.card-signin {
+  border: 0;
+  border-radius: 1rem !important;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-signin .card-title {
+  margin-bottom: 2rem;
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.card-signin .card-body {
+  padding: 2rem;
+  width: 350px;
+}
+
+.form-signin {
+  width: 100%;
+}
+
+.form-signin .btn {
+  font-size: 80%;
+  border-radius: 5rem;
+  letter-spacing: .1rem;
+  font-weight: bold;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+
+.rowcus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+a:hover{
+  text-decoration: none !important;
+}
+
+.forgot-pass{
+  cursor: pointer;
+  color: #212529 !important;
+}
+
+#notification {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 177px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  margin: 0;
+  text-align: center;
+}
+.hidden {
+  display: none;
+}
+#close-button{
+  border-color: white;
+  border-radius: 5rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  color: #212529 !important;
+}
+#restart-button{
+  border-color: white;
+  border-radius: 5rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  color: #212529 !important;
+}
