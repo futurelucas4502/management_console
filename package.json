@@ -26,12 +26,18 @@
   "homepage": "https://github.com/futurelucas4502/management-console#readme",
   "build": {
     "appId": "com.electron.managementconsole",
-    "publish": [
-      {
-        "provider": "github",
-        "url": "https://github.com/futurelucas4502/management-console.git"
-      }
-    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon-win.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.productivity",
+      "icon": "build/icon-mac.png"
+    },
+    "linux":{
+      "target": "appImage"
+    },
     "dmg": {
       "category": "public.app-category.productivity",
       "contents": [
@@ -53,7 +59,13 @@
     "nsis": {
       "createDesktopShortcut": "always",
       "license": "LICENSE"
-    }
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "url": "https://github.com/futurelucas4502/management-console.git"
+      }
+    ]
   },
   "devDependencies": {
     "electron": "^8.2.1",
