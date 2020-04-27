@@ -18,6 +18,9 @@ If your OS is not supported you can build the app for your OS!:
 4. Open a terminal and run `npm install`
 5. Then run `npm build`
 
+If you get an error you may need to look here as keytar may need to be rebuilt:
+https://github.com/atom/node-keytar#on-linux
+
 # Contact Details:
 
 Lucas Wilson <lucaswilson4502@outlook.com>
