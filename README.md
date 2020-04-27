@@ -17,14 +17,26 @@ If your OS is not supported you can build the app for your OS!:
 3. Change into the folder that was cloned/extracted
 4. Open a terminal and run `npm install`
 5. Then run `npm build` for window, or `npm run-script build` for linux or for macOS `npm run build`
+
+If you get an error you may need to look here as keytar may need additional dependencies:
+https://github.com/atom/node-keytar#on-linux
+
 6. Then change into the dist directory on windows you will have an exe, on mac a dmg and on linux an appimage file
 
 On Windows you can just run the exe, on macOS you can run the dmg and install it, on linux you must do this (below is an example for version 1.0.26 on arm64):
 1. Then to give the AppImage the correct permissions like so `sudo chmod a+x ./The\ City\ Of\ Truro\ Mariners\ -\ Management\ Console-1.0.26-arm64.AppImage`
 2. Then run this `./The\ City\ Of\ Truro\ Mariners\ -\ Management\ Console-1.0.26-arm64.AppImage --no-sandbox`
 
-If you get an error you may need to look here as keytar may need to be rebuilt:
-https://github.com/atom/node-keytar#on-linux
+If you would like to set up a desktop shortcut to make running the application easier  on linux you can do the following:
+1. Move the AppImage to anywhere you want it. (in this example it will be in the same folder as the shortcut)
+2. Next open terminal and run `>Management-Console.sh`
+3. Open the file using `sudo nano Management-Console.sh`
+4. Copy paste this code: ```#!/bin/bash
+./The\ City\ Of\ Truro\ Mariners\ -\ Management\ Console-1.0.26-arm64.AppImage --no-sandbox``` (example for version 1.0.26 on arm64)
+5. Then save by pressing ctrl+x then y then enter
+6. Then visit [here](https://askubuntu.com/a/305776) to learn how to make the file run by double clicking or if on ubuntu and using gnome run `gsettings set org.gnome.nautilus.preferences executable-text-activation 'launch'`
+7. Then right click on Management-Console.sh go to the permissons tab and mark it as executable
+8. Double-click and enjoy!
 
 # Contact Details:
 
