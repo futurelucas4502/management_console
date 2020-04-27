@@ -8,7 +8,8 @@
   "scripts": {
     "start": "electron .",
     "postinstall": "electron-builder install-app-deps",
-    "release": "electron-builder build --publish always",
+    "release": "electron-builder",
+    "test": "echo success",
     "pack": "electron-builder --dir --publish never",
     "create-installer-win": "electron-builder build --win --publish never"
   },
