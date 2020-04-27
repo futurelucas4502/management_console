@@ -39,7 +39,6 @@
       "target": "appImage"
     },
     "dmg": {
-      "category": "public.app-category.productivity",
       "contents": [
         {
           "x": 110,
