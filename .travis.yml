@@ -56,13 +56,13 @@ script:
     else
       yarn test
     fi
-# only deploy to github on a merge to the prod branch
+# only deploy to github on a merge to the master branch
 deploy:
   provider: script
   script: bash deploy.travis.sh
   skip_cleanup: true
   on:
-    branch: prod
+    branch: master
     
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine
