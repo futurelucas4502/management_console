@@ -245,6 +245,7 @@ input[type="file"] {
   border-radius: .25rem;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+
 #notification {
   position: fixed;
   bottom: 20px;
@@ -258,9 +259,11 @@ input[type="file"] {
   margin: 0;
   text-align: center;
 }
+
 .hidden {
   display: none;
 }
+
 #close-button{
   border-color: white;
   border-radius: 5rem;
@@ -268,6 +271,7 @@ input[type="file"] {
   cursor: pointer;
   color: #212529 !important;
 }
+
 #restart-button{
   border-color: white;
   border-radius: 5rem;
