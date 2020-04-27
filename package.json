@@ -34,7 +34,6 @@
     ],
     "dmg": {
       "category": "public.app-category.productivity",
-      "icon": "build/icon-mac.png",
       "contents": [
         {
           "x": 110,
@@ -53,7 +52,6 @@
     },
     "nsis": {
       "createDesktopShortcut": "always",
-      "icon": "build/icon-win.ico",
       "license": "LICENSE"
     }
   },
