@@ -43,8 +43,6 @@ function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
     width: 800, height: 700,
-    minHeight: 700,
-    minWidth: 800,
     show: false,
     webPreferences: {
       nodeIntegration: true,
@@ -115,7 +113,7 @@ function createWindow () {
           event.sender.send("incorrect")
           if (!dialogOpen){
             dialogOpen = true
-            return dialog.showMessageBox(win,{type: 'error',title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+            return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
               dialogOpen = false
             });
           }
@@ -129,7 +127,7 @@ function createWindow () {
           event.sender.send("incorrect")
           if (!dialogOpen){
             dialogOpen = true
-            return dialog.showMessageBox(win,{type: 'error',title: 'Unknown Error',message: 'An unknown error eccured please check your internet connection or try and visit https://lucas-testing.000webhostapp.com if it fails your service provider may be blocking us if however you can connect this is likely a server issue if it happens repeatedly contact me at lucaswilson4502@outlook.com'}).then(response => {
+            return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Unknown Error',message: 'An unknown error eccured please check your internet connection or try and visit https://lucas-testing.000webhostapp.com if it fails your service provider may be blocking us if however you can connect this is likely a server issue if it happens repeatedly contact me at lucaswilson4502@outlook.com'}).then(response => {
               dialogOpen = false
             });
           }
@@ -224,6 +222,7 @@ app.on('window-all-closed', () => {
 
 const connectionErrorMessage = {
   type: "error",
+  buttons: ['OK'],
   title: "Connection error",
   message: "Please check your internet connection.",
   detail: "If you are connected our service provider may be down sorry for any inconvenience. If you still can't get back on after a few hours please contact me at: lucaswilson4502@outlook.com and I will look into the issue."
@@ -274,7 +273,7 @@ ipcMain.on('login', (event, arg) => {
       event.sender.send("incorrect")
       if (!dialogOpen){
         dialogOpen = true
-        return dialog.showMessageBox(win,{type: 'error',title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+        return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
           dialogOpen = false
         });
       }
@@ -287,7 +286,7 @@ ipcMain.on('login', (event, arg) => {
       event.sender.send("incorrect")
       if (!dialogOpen){
         dialogOpen = true
-        return dialog.showMessageBox(win,{type: 'error',title: 'Unknown Error',message: 'An unknown error eccured please check your internet connection or try and visit https://lucas-testing.000webhostapp.com if it fails your service provider may be blocking us if however you can connect this is likely a server issue if it happens repeatedly contact me at lucaswilson4502@outlook.com'}).then(response => {
+        return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Unknown Error',message: 'An unknown error eccured please check your internet connection or try and visit https://lucas-testing.000webhostapp.com if it fails your service provider may be blocking us if however you can connect this is likely a server issue if it happens repeatedly contact me at lucaswilson4502@outlook.com'}).then(response => {
           dialogOpen = false
         });
       }
@@ -306,7 +305,7 @@ ipcMain.on('login', (event, arg) => {
   function incorrect() {
     if (!dialogOpen){
       dialogOpen = true
-      dialog.showMessageBox(win,{type: 'error',title: 'Login Error',message: 'Incorrect Username or Password'}).then(response => {
+      dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Login Error',message: 'Incorrect Username or Password'}).then(response => {
         dialogOpen = false
       });
     }
@@ -327,7 +326,7 @@ ipcMain.on("request-access", (event,arg)=>{
     if (body == "Mailer Error"){
       if (!dialogOpen){
         dialogOpen = true
-        dialog.showMessageBox(win,{type:"error",title:"Request Error",message:"Access request failed. Please try again or contact TruroMariners@gmail.com to request access manually."}).then(response => {
+        dialog.showMessageBox(win,{type:"error",buttons: ['OK'],title:"Request Error",message:"Access request failed. Please try again or contact TruroMariners@gmail.com to request access manually."}).then(response => {
           dialogOpen = false
         });
       }
@@ -335,7 +334,7 @@ ipcMain.on("request-access", (event,arg)=>{
     if (body == "Request Confirmed"){
       if (!dialogOpen){
         dialogOpen = true
-        dialog.showMessageBox(win,{type:"info",title:"Success",message:"A request was sent to: TruroMariners@gmail.com. Make sure to check your emails as you will be asked for more information to confirm your identity."}).then(response => {
+        dialog.showMessageBox(win,{type:"info",buttons: ['OK'],title:"Success",message:"A request was sent to: TruroMariners@gmail.com. Make sure to check your emails as you will be asked for more information to confirm your identity."}).then(response => {
           dialogOpen = false
         });
       }
@@ -344,7 +343,7 @@ ipcMain.on("request-access", (event,arg)=>{
     if (body == "Already Access"){
       if (!dialogOpen){
         dialogOpen = true
-        dialog.showMessageBox(win,{type:"info",title:"Account Already Exists",message:"An account with your email already exists. If you are a new member check your emails for details if you have forgotten your password press forgot password. If you believe this to be a mistake please contact: TruroMariners@gmail.com"}).then(response => {
+        dialog.showMessageBox(win,{type:"info",buttons: ['OK'],title:"Account Already Exists",message:"An account with your email already exists. If you are a new member check your emails for details if you have forgotten your password press forgot password. If you believe this to be a mistake please contact: TruroMariners@gmail.com"}).then(response => {
           dialogOpen = false
         });
       }
@@ -408,7 +407,7 @@ ipcMain.on('add-member', (event, arg) => {
     if (body == "Already Exists"){
       if (!dialogOpen){
         dialogOpen = true
-        return dialog.showMessageBox(win,{type: 'error',title: 'Member Add Error',message: 'An Account with this username or email already exists please choose something different'}).then(response => {
+        return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Member Add Error',message: 'An Account with this username or email already exists please choose something different'}).then(response => {
           dialogOpen = false
         });
       }
@@ -416,7 +415,7 @@ ipcMain.on('add-member', (event, arg) => {
     if (body == "Query Error"){
       if (!dialogOpen){
         dialogOpen = true
-        return dialog.showMessageBox(win,{type: 'error',title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+        return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
           dialogOpen = false
         });
       }
@@ -424,7 +423,7 @@ ipcMain.on('add-member', (event, arg) => {
     if (body == "Success"){
       if (!dialogOpen){
         dialogOpen = true
-        dialog.showMessageBox(win,{type:"info",title:"Success",message:"A new account was successfully created."}).then(response => {
+        dialog.showMessageBox(win,{type:"info",buttons: ['OK'],title:"Success",message:"A new account was successfully created."}).then(response => {
           dialogOpen = false
         });
       } 
@@ -432,7 +431,7 @@ ipcMain.on('add-member', (event, arg) => {
     if (body == "Mailer Error"){
       if (!dialogOpen){
         dialogOpen = true
-        dialog.showMessageBox(win,{type:"info",title:"Email Error",message:"A new account was successfully created. However the email provided was invalid so they have not been emailed their details."}).then(response => {
+        dialog.showMessageBox(win,{type:"info",buttons: ['OK'],title:"Email Error",message:"A new account was successfully created. However the email provided was invalid so they have not been emailed their details."}).then(response => {
           dialogOpen = false
         });
       } 
@@ -444,7 +443,7 @@ ipcMain.on("delete-self?", (event, arg) => {
   if(currentusername == arg){
     if (!dialogOpen){
       dialogOpen = true
-      dialog.showMessageBox(win,{type: 'error',title: 'Delete error',message: 'You cannot delete yourself.'}).then(response => {
+      dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Delete error',message: 'You cannot delete yourself.'}).then(response => {
         dialogOpen = false
       });
     } 
@@ -471,7 +470,7 @@ ipcMain.on("delete-user", (event,arg) => {
       if (body == "Query Error"){
         if (!dialogOpen){
           dialogOpen = true
-          return dialog.showMessageBox(win,{type: 'error',title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+          return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
             dialogOpen = false
           });
         }
@@ -481,7 +480,7 @@ ipcMain.on("delete-user", (event,arg) => {
   }else{
     if (!dialogOpen){
       dialogOpen = true
-      dialog.showMessageBox(win,{type: 'error',title: 'Delete Error',message: 'Incorrect Password!'}).then(response => {
+      dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Delete Error',message: 'Incorrect Password!'}).then(response => {
         dialogOpen = false
       });
     }
@@ -493,7 +492,7 @@ ipcMain.on("edit-self?", (event, arg) => {
   if(currentusername == arg){
     if (!dialogOpen){
       dialogOpen = true
-      return dialog.showMessageBox(win,{type: 'error',title: 'Edit error',message: 'You cannot edit yourself from here.'}).then(response => {
+      return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Edit error',message: 'You cannot edit yourself from here.'}).then(response => {
         dialogOpen = false
       });
     }
@@ -517,7 +516,7 @@ ipcMain.on("edit-user", (event, arg) => {
     if (body == "Query Error"){
       if (!dialogOpen){
         dialogOpen = true
-        return dialog.showMessageBox(win,{type: 'error',title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+        return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
           dialogOpen = false
         });
       }
@@ -525,7 +524,7 @@ ipcMain.on("edit-user", (event, arg) => {
     if (body == "Already Exists"){
       if (!dialogOpen){
         dialogOpen = true
-        return dialog.showMessageBox(win,{type: 'error',title: 'Member Add Error',message: 'An Account with this email already exists please choose something different'}).then(response => {
+        return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Member Add Error',message: 'An Account with this email already exists please choose something different'}).then(response => {
           dialogOpen = false
         });
       }
@@ -571,7 +570,7 @@ ipcMain.on("add-event", (event, arg) => {
     if (body == "Submitted"){
       if (!dialogOpen){
         dialogOpen = true
-        dialog.showMessageBox(win,{type:"info",title:"Success",message:"Your event was submitted and is waiting approval",detail:"It will not appear here until an admin has approved it."}).then(response => {
+        dialog.showMessageBox(win,{type:"info",buttons: ['OK'],title:"Success",message:"Your event was submitted and is waiting approval",detail:"It will not appear here until an admin has approved it."}).then(response => {
           dialogOpen = false
         });
       }
@@ -579,7 +578,7 @@ ipcMain.on("add-event", (event, arg) => {
     if (body == "Query Error"){
       if (!dialogOpen){
         dialogOpen = true
-        return dialog.showMessageBox(win,{type: 'error',title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+        return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
           dialogOpen = false
         });
       }
@@ -604,7 +603,7 @@ ipcMain.on("delete-event", (event, arg) => {
       if (body == "Query Error"){
         if (!dialogOpen){
           dialogOpen = true
-          return dialog.showMessageBox(win,{type: 'error',title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+          return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
             dialogOpen = false
           });
         }
@@ -613,7 +612,7 @@ ipcMain.on("delete-event", (event, arg) => {
   })} else {
     if (!dialogOpen){
       dialogOpen = true
-      dialog.showMessageBox(win,{type: 'error',title: 'Delete Error',message: 'Incorrect Password!'}).then(response => {
+      dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Delete Error',message: 'Incorrect Password!'}).then(response => {
         dialogOpen = false
       });
     }
@@ -637,7 +636,7 @@ ipcMain.on("edit-event", (event, arg) => {
     if (body == "Query Error"){
       if (!dialogOpen){
         dialogOpen = true
-        return dialog.showMessageBox(win,{type: 'error',title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+        return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
           dialogOpen = false
         });
       }
@@ -658,7 +657,7 @@ ipcMain.on("reset-password", (event, arg) => {
     if (body == "NoAccount"){
       if (!dialogOpen){
         dialogOpen = true
-        dialog.showMessageBox(win,{type: 'error',title: 'Account not found',message: 'Check the entered email is correct.'}).then(response => {
+        dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Account not found',message: 'Check the entered email is correct.'}).then(response => {
           dialogOpen = false
         });
       }
@@ -670,7 +669,7 @@ ipcMain.on("reset-password", (event, arg) => {
     if (body == "Query Error"){
       if (!dialogOpen){
         dialogOpen = true
-        return dialog.showMessageBox(win,{type: 'error',title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+        return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
           dialogOpen = false
         });
       }
@@ -698,7 +697,7 @@ ipcMain.on("password-reset", (event, arg) => {
       if (body == "Incorrect"){
         if (!dialogOpen){
           dialogOpen = true
-          dialog.showMessageBox(win,{type: 'error',title: 'Password Reset not found',message: 'Check the entered code is correct and that its been less than 10mins since the code was sent if its been longer please request a new code.'}).then(response => {
+          dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Password Reset not found',message: 'Check the entered code is correct and that its been less than 10mins since the code was sent if its been longer please request a new code.'}).then(response => {
             dialogOpen = false
           });
         }
@@ -707,7 +706,7 @@ ipcMain.on("password-reset", (event, arg) => {
       if (body == "Success"){
         if (!dialogOpen){
           dialogOpen = true
-          dialog.showMessageBox(win,{type:"info",title:"Success",message:"Your Password Was Changed Successfully"}).then(response => {
+          dialog.showMessageBox(win,{type:"info",buttons: ['OK'],title:"Success",message:"Your Password Was Changed Successfully"}).then(response => {
             dialogOpen = false
           });
         }
@@ -716,7 +715,7 @@ ipcMain.on("password-reset", (event, arg) => {
       if (body == "Query Error"){
         if (!dialogOpen){
           dialogOpen = true
-          return dialog.showMessageBox(win,{type: 'error',title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+          return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
             dialogOpen = false
           });
         }
@@ -726,7 +725,7 @@ ipcMain.on("password-reset", (event, arg) => {
   else {
     if (!dialogOpen){
       dialogOpen = true
-      return dialog.showMessageBox(win,{type: 'error',title: "The Passwords Don't Match",message: 'Please Try Again.'}).then(response => {
+      return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: "The Passwords Don't Match",message: 'Please Try Again.'}).then(response => {
         dialogOpen = false
       });
     }
@@ -814,7 +813,7 @@ ipcMain.on('message-send', (event, username, message, ID, file) => {
       if (body == "Query Error"){
         if (!dialogOpen){
           dialogOpen = true
-          return dialog.showMessageBox(win,{type: 'error',title: 'Send Error',message: 'Message failed to send please try again and if this happens multiple times contact me at: lucaswilson4502@outlook.com'}).then(response => {
+          return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Send Error',message: 'Message failed to send please try again and if this happens multiple times contact me at: lucaswilson4502@outlook.com'}).then(response => {
             dialogOpen = false
           });
         }
@@ -842,7 +841,7 @@ ipcMain.on('message-read', (event,arg) =>{
       if (body == "Query Error"){
         if (!dialogOpen){
           dialogOpen = true
-          return dialog.showMessageBox(win,{type: 'error',title: 'Query Error',message: 'Message failed to be set as read please try again and if this happens multiple times contact me at: lucaswilson4502@outlook.com'}).then(response => {
+          return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Query Error',message: 'Message failed to be set as read please try again and if this happens multiple times contact me at: lucaswilson4502@outlook.com'}).then(response => {
             dialogOpen = false
           });
         }
@@ -934,7 +933,7 @@ ipcMain.on("payment-success",(event,arg)=>{
   })
   if (!dialogOpen){
     dialogOpen = true
-    return dialog.showMessageBox(win,{type: 'info',title: 'Payment Success',message: 'Payment Successful'}).then(response => {
+    return dialog.showMessageBox(win,{type: 'info',buttons: ['OK'],title: 'Payment Success',message: 'Payment Successful'}).then(response => {
       dialogOpen = false
     });
   }
@@ -973,7 +972,7 @@ ipcMain.on("add-outgoing", (event, arg) => {
     if (body == "Success"){
       if (!dialogOpen){
         dialogOpen = true
-        dialog.showMessageBox(win,{type:"info",title:"Success",message:"Your expenditure was successfully added!",detail:"It will show up in the 'Load expenditure' section."}).then(response => {
+        dialog.showMessageBox(win,{type:"info",buttons: ['OK'],title:"Success",message:"Your expenditure was successfully added!",detail:"It will show up in the 'Load expenditure' section."}).then(response => {
           dialogOpen = false
         });
       }
@@ -981,7 +980,7 @@ ipcMain.on("add-outgoing", (event, arg) => {
     if (body == "Query Error"){
       if (!dialogOpen){
         dialogOpen = true
-        return dialog.showMessageBox(win,{type: 'error',title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+        return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
           dialogOpen = false
         });
       }
@@ -1022,7 +1021,7 @@ ipcMain.on("payment-add", (event, arg) => {
     if (body == "Success"){
       if (!dialogOpen){
         dialogOpen = true
-        dialog.showMessageBox(win,{type:"info",title:"Success",message:"A payment was successfully added!",detail:"It will show up in the 'Load payments' section."}).then(response => {
+        dialog.showMessageBox(win,{type:"info",buttons: ['OK'],title:"Success",message:"A payment was successfully added!",detail:"It will show up in the 'Load payments' section."}).then(response => {
           dialogOpen = false
         });
       }
@@ -1030,12 +1029,88 @@ ipcMain.on("payment-add", (event, arg) => {
     if (body == "Query Error"){
       if (!dialogOpen){
         dialogOpen = true
-        return dialog.showMessageBox(win,{type: 'error',title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+        return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
           dialogOpen = false
         });
       }
     }
   })
+})
+
+ipcMain.on("loadExpenditure",(event, arg)=>{
+  request.post({url:connectionurl, form: {formname:"loadExpenditure",username:currentusername,password:currentpassword}},function(err,_,body){
+    if (err) {
+      if (!dialogOpen){
+        dialogOpen = true
+        return dialog.showMessageBox(win,connectionErrorMessage).then(response => {
+          dialogOpen = false
+        });
+      }
+    }
+    if (body == "Unauthorised"){
+      return logout(true);
+    }
+    event.sender.send('expenditure-data', body)
+  })
+})
+
+ipcMain.on("edit-expend",(event,arg)=>{
+  request.post({url:connectionurl, form: {formname:"editExpend",username:currentusername,password:currentpassword,item:arg.item,description:arg.description,datetime:arg.datetime,location:arg.location,member:arg.member,ID:arg.id}},function(err,_,body){
+    if (err) {
+      if (!dialogOpen){
+        dialogOpen = true
+        return dialog.showMessageBox(win,connectionErrorMessage).then(response => {
+          dialogOpen = false
+        });
+      }
+    }
+    if (body == "Unauthorised"){
+      return logout(true);
+    }
+    if (body == "Query Error"){
+      if (!dialogOpen){
+        dialogOpen = true
+        return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+          dialogOpen = false
+        });
+      }
+    }
+  })
+})
+
+ipcMain.on("delete-expend", (event, arg) => {
+  if(encrypt(arg.password) == currentpassword){
+    request.post({url:connectionurl, form: {formname:"deleteExpend",username:currentusername,password:currentpassword,ID:arg.ID}},function(err,_,body){
+      console.log(body)
+      if (err) {
+        if (!dialogOpen){
+          dialogOpen = true
+          return dialog.showMessageBox(win,connectionErrorMessage).then(response => {
+            dialogOpen = false
+          });
+        }
+      }
+      if (body == "Unauthorised"){
+        return logout(true);
+      }
+      if (body == "Query Error"){
+        if (!dialogOpen){
+          dialogOpen = true
+          return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+            dialogOpen = false
+          });
+        }
+      }
+      win.reload()
+  })} else {
+    if (!dialogOpen){
+      dialogOpen = true
+      dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Delete Error',message: 'Incorrect Password!'}).then(response => {
+        dialogOpen = false
+      });
+    }
+    event.sender.send("expend-delete-incorrect")
+  }
 })
 
 // In Program Scripts:
@@ -1055,7 +1130,7 @@ function logout(authFail) {
     if (authFail == true) {
       if (!dialogOpen){
         dialogOpen = true
-        dialog.showMessageBox(win,{type: 'error',title: 'Error',message: 'Unauthorised Access!'}).then(response => {
+        dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Error',message: 'Unauthorised Access!'}).then(response => {
           dialogOpen = false
         });
       }
@@ -1077,7 +1152,7 @@ var encrypt = ((val) => {
 ipcMain.on("too-large",(event,arg)=>{
   if (!dialogOpen){
     dialogOpen = true
-    return dialog.showMessageBox(win,{type: 'error',title: 'Send Error',message: 'Message failed to send this file is too large.'}).then(response => {
+    return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Send Error',message: 'Message failed to send this file is too large. Max file size is around 8MB, actual size may vary.'}).then(response => {
       dialogOpen = false
     });
   }
@@ -1086,7 +1161,7 @@ ipcMain.on("too-large",(event,arg)=>{
 ipcMain.on("file-not-found",(event,arg)=>{
   if (!dialogOpen){
     dialogOpen = true
-    return dialog.showMessageBox(win,{type: 'error',title: 'File Error',message: 'File failed to be converted if you cancelled the dialog ignore this message if not then the file is not supported.'}).then(response => {
+    return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'File Error',message: 'File failed to be converted if you cancelled the dialog ignore this message if not then the file is not supported.'}).then(response => {
       dialogOpen = false
     });
   }
