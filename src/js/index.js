@@ -72,6 +72,11 @@ $(document).ready(() => {
             format: 'DD/MM/YYYY HH:mm'
         });
       });
+      $(function () {
+        $('#datetimepicker5').datetimepicker({
+          format: 'DD/MM/YYYY HH:mm'
+      });
+    });
       
     })
     require("bootstrap")
@@ -228,7 +233,7 @@ ipcRenderer.on('event-data', (event, arg) => {
     ipcRenderer.send("delete-event", details)
   }
 
-  ipcRenderer.on("member-event-incorrect", (event,arg) =>{
+  ipcRenderer.on("event-delete-incorrect", (event,arg) =>{
     document.getElementById('confirmPassword').value = null
     document.getElementById('confirmPassword').focus()
   })
@@ -772,7 +777,102 @@ ipcRenderer.on('app_version', (event, arg) => {
 
 // Accounting.js:
 
-// document.getElementById("SearchBox").style.display = "flex" 
+function loadExpenditureFunc(){
+  document.getElementById("table").innerHTML = '<a class="abs-center-x" style="padding: 8px;font-size: 25px;color: #818181!important;"><span class="spinner-border m-1" style="width: 1.25rem;height: 1.25rem;border-width: .2rem;" role="status" aria-hidden="true"></span>Loading...</a>'
+  ipcRenderer.send("loadExpenditure")
+}
+
+var expenditureData
+
+ipcRenderer.on("expenditure-data",(event,arg)=>{
+  arg = JSON.parse(arg)
+  expenditureData = arg
+  var i=0
+  var table =''; //to store html table
+  for(i; i<arg.length; i++){
+    var ID = "'" + arg[i].ID + "'"
+    var item = "'" + arg[i].item + "'"
+    var description = "'" + arg[i].description + "'"
+    var datetime = "'" + moment(arg[i].datetime).format("DD/MM/YYYY HH:mm") + "'"
+    var location = "'" + arg[i].location + "'"
+    var member = "'" + arg[i].member + "'"
+    table +='<tr><td class="mytd" style="vertical-align: middle;" scope="row">'+ arg[i].member +'</td><td class="mytd" style="vertical-align: middle;">'+ arg[i].item +'</td><td class="mytd" style="vertical-align: middle;">'+arg[i].description+'</td><td class="mytd" style="vertical-align: middle;">'+arg[i].datetime+'</td><td class="mytd" style="vertical-align: middle;">'+arg[i].location+'</td><td class="mytd"><button type="button" class="btn btn-info" style="margin-right: 10px;" onclick="editExpenditureFunc('+ item +','+ description +','+ datetime +','+ location +','+ member +','+ ID +')" >&#9998; Edit</button><button type="submit" style="margin-right: 10px;" class="btn btn-danger" onclick="deleteExpenditure(' + ID + ')">&#9888; Delete Expenditure</button></td></tr>';
+  }
+  table ='<table class="table table-striped mytable"><thead><tr><th>Username</th><th>Item name</th><th>Description</th><th>Datetime</th><th>Location</th><th>Options</th></tr></thead><tbody>'+ table +'</tbody></table>';
+  document.getElementById("table").innerHTML = table
+  document.getElementById("SearchBox").style.display = "flex" 
+})
+
+if(document.title === "Accounting"){
+  document.getElementById("SearchBoxInput").onkeyup = function(){
+    var searchTerm = document.getElementById("SearchBoxInput").value
+    if (searchTerm == "") {
+      var arg = expenditureData
+    } else {
+      var arg = expenditureData.filter(data => data.item.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+    }
+    var i=0
+    var table =''; //to store html table
+    for(i; i<arg.length; i++){
+      var ID = "'" + arg[i].ID + "'"
+      var item = "'" + arg[i].item + "'"
+      var description = "'" + arg[i].description + "'"
+      var datetime = "'" + moment(arg[i].datetime).format("DD/MM/YYYY HH:mm") + "'"
+      var location = "'" + arg[i].location + "'"
+      var member = "'" + arg[i].member + "'"
+      table +='<tr><td class="mytd" style="vertical-align: middle;" scope="row">'+ arg[i].member +'</td><td class="mytd" style="vertical-align: middle;">'+ arg[i].item +'</td><td class="mytd" style="vertical-align: middle;">'+arg[i].description+'</td><td class="mytd" style="vertical-align: middle;">'+arg[i].datetime+'</td><td class="mytd" style="vertical-align: middle;">'+arg[i].location+'</td><td class="mytd"><button type="button" class="btn btn-info" style="margin-right: 10px;" onclick="editExpenditureFunc('+ item +','+ description +','+ datetime +','+ location +','+ member +','+ ID +')" >&#9998; Edit</button><button type="submit" style="margin-right: 10px;" class="btn btn-danger" onclick="deleteExpenditure (' + ID + ')">&#9888; Delete Expenditure</button></td></tr>';
+    }
+    table ='<table class="table table-striped mytable"><thead><tr><th>Username</th><th>Item name</th><th>Description</th><th>Datetime</th><th>Location</th><th>Options</th></tr></thead><tbody>'+ table +'</tbody></table>';
+    document.getElementById("table").innerHTML = table
+  };
+}
+
+function editExpenditureFunc(item, description, datetime, location, member, ID) {
+  $('#editExpenditureModal').modal('toggle');
+  document.getElementById("itemEditExpend").value = item
+  document.getElementById("descriptionEditExpend").value = description
+  document.getElementById("datetimeEditExpend").value = datetime
+  document.getElementById("locationEditExpend").value = location
+  document.getElementById("memberEditExpend").value = member
+  document.getElementById("expendID").value = ID
+}
+
+function editExpenditureConfirm(){
+  var details = {
+    item: document.getElementById("itemEditExpend").value,
+    description: document.getElementById("descriptionEditExpend").value,
+    datetime: moment(document.getElementById("datetimeEditExpend").value,"DD/MM/YYYY HH:mm").format("YYYY-MM-DD HH:mm"),
+    location: document.getElementById("locationEditExpend").value,
+    member: document.getElementById("memberEditExpend").value,
+    id: document.getElementById("expendID").value
+  }
+  ipcRenderer.send('edit-expend', details);
+}
+
+var deleteExpendID
+  function deleteExpenditure(ID){
+    deleteExpendID = ID
+    $('#deleteExpendModal').modal('toggle');
+    document.getElementById("confirmPassword").value = null
+    document.getElementById("confirmPassword").focus()
+  }
+
+  function deleteExpendConfirm(){
+    var details = {
+      ID: deleteExpendID,
+      password: document.getElementById('confirmPassword').value
+  }
+    ipcRenderer.send("delete-expend", details)
+  }
+
+ipcRenderer.on("expend-delete-incorrect", (event,arg) =>{
+  document.getElementById('confirmPassword').value = null
+  document.getElementById('confirmPassword').focus()
+})
+
+function loadPaymentsFunc(){
+  
+}
 
 function addOutgoingFunc() {
   tint()
@@ -820,7 +920,7 @@ ipcRenderer.on("load-usernames-data",(event,arg)=>{
     table +='<option value="'+arg[i].username+'">'+arg[i].username+'</option>';
   }
   document.getElementById("membershipPaymentInputUsername").innerHTML = table
-  $("#membershipPaymentInputUsername").prop("disabled", false);
+  document.getElementById("memberEditExpend").innerHTML = table
 })
 
 function paymentAdd() {
