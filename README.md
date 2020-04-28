@@ -10,7 +10,7 @@ I know what I'm doing:tm:
 
 # Documentation:
 
-If your OS is not supported you can build the app for your OS!:
+If your OS or architecture is not supported you can build the app for your OS as long as its supported by node and electron:
 
 1. Install node.js: https://nodejs.org/en/download/
 2. Clone or download the repository (if using zip extract the zip file)
@@ -18,8 +18,7 @@ If your OS is not supported you can build the app for your OS!:
 4. Open a terminal and run `npm install`
 5. Then run `npm build` for window, or `npm run-script build` for linux or for macOS `npm run build`
 
-If you get an error you may need to look here as keytar may need additional dependencies:
-https://github.com/atom/node-keytar#on-linux
+If you get an error you may need to look [here](https://github.com/atom/node-keytar#on-linux) as keytar may need additional dependencies (link for linux as it seems to have the most issues however you can also find macOS and Windows in the same link)
 
 6. Then change into the dist directory on windows you will have an exe, on mac a dmg and on linux an appimage file
 

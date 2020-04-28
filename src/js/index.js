@@ -887,7 +887,8 @@ function outgoingAdd() {
     item: document.getElementById("productInputOutgoing").value,
     description: document.getElementById("descriptionInputOutgoing").value,
     datetime: moment(document.getElementById("datetimeInputOutgoing").value,"DD/MM/YYYY HH:mm").format("YYYY-MM-DD HH:mm"),
-    location: document.getElementById("locationInputOutgoing").value
+    location: document.getElementById("locationInputOutgoing").value,
+    member: document.getElementById("expendInputUsername").value
   }
   ipcRenderer.send('add-outgoing', details);
 }
@@ -921,6 +922,7 @@ ipcRenderer.on("load-usernames-data",(event,arg)=>{
   }
   document.getElementById("membershipPaymentInputUsername").innerHTML = table
   document.getElementById("memberEditExpend").innerHTML = table
+  document.getElementById("expendInputUsername").innerHTML = table
 })
 
 function paymentAdd() {

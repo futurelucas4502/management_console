@@ -77,9 +77,12 @@ function createWindow () {
     win.hide();
   });
 
-  tray = new Tray(path.join(__dirname, 'assets','images','icon.png'))
+  tray = new Tray(path.join(__dirname, 'assets','images','tray-icon.png'))
   tray.setToolTip("The City Of Truro Mariners - Management Console")
   tray.setContextMenu(Menu.buildFromTemplate([{
+    label: 'Open', click:  function(){
+      win.show();
+    }},{
     label: 'Quit', click:  function(){
       win.destroy()
       app.quit()
@@ -208,6 +211,7 @@ if (!gotTheLock) {
     if (win === null) {
       createWindow()
     }
+    win.show();
   })
 }
 
@@ -957,7 +961,7 @@ ipcMain.on("payments-ready",(event,arg)=>{
 })
 
 ipcMain.on("add-outgoing", (event, arg) => {
-  request.post({url:connectionurl, form: {formname:"addOutgoing",username:currentusername,password:currentpassword,item:arg.item,description:arg.description,datetime:arg.datetime,location:arg.location}},function(err,_,body){
+  request.post({url:connectionurl, form: {formname:"addOutgoing",username:currentusername,password:currentpassword,item:arg.item,description:arg.description,datetime:arg.datetime,location:arg.location,member:arg.member}},function(err,_,body){
     if (err) {
       if (!dialogOpen){
         dialogOpen = true
