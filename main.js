@@ -1146,10 +1146,10 @@ ipcMain.on('logout', function(event, arg) {
 
 function logout(authFail) {
   win.loadFile(path.join(__dirname, 'src','login.html'));
-  keytar.deletePassword("The City Of Truro Mariners - Management Console", currentusername)
+  clearInterval(messagesNotify)
+  try {keytar.deletePassword("The City Of Truro Mariners - Management Console", currentusername)} catch {}
   currentusername = null
   currentpassword = null
-  clearInterval(messagesNotify)
   array = []
   win.webContents.on('did-finish-load', () =>{
     if (authFail == true) {

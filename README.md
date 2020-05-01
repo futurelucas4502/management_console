@@ -4,23 +4,7 @@ A2 Computer Science coursework for the City of Truro Mariners Model Boat Club
 
 API is closed source as it handles payments therefore has private keys etc
 
-And yes my commit messages are canerous xD if I was working in a team they would be nicer but im only working on my own so it doesn't really matter
-
-I know what I'm doing:tm:
-
 ## Documentation:
-
-If your OS or architecture is not supported you can build the app for your OS as long as its supported by node and electron:
-
-1. Install node.js: https://nodejs.org/en/download/
-2. Clone or download the repository (if using zip extract the zip file)
-3. Change into the folder that was cloned/extracted
-4. Open a terminal and run `npm install`
-5. Then run `npm build` for windows, or `npm run-script build` for linux or for macOS `npm run build`
-
-On Linux you may get an error as keytar needs an additional dependency see [here](https://github.com/atom/node-keytar#on-linux).
-
-6. Then change into the dist directory on windows you will have an exe, on mac a dmg and on linux an appimage file
 
 ### How to run the program:
 
@@ -29,6 +13,20 @@ On Linux you may get an error as keytar needs an additional dependency see [here
 * On linux you get an AppImage the idea is that an AppImage will work on any linux system whether it runs with debian or not it works like a portable application that doesnt get installed and to run it you must do this (below is an example for version 1.0.26 on arm64):
     1. Give the AppImage the correct permissions like so (this only needs to be done once on the file) `sudo chmod a+x ./The\ City\ Of\ Truro\ Mariners\ -\ Management\ Console-1.0.26-arm64.AppImage`
     2. Then run this `./The\ City\ Of\ Truro\ Mariners\ -\ Management\ Console-1.0.26-arm64.AppImage --no-sandbox`
+
+### Unsupported OS? No Problem!
+
+If your OS or architecture is not supported you can build the app for your OS as long as its supported by node and electron:
+
+1. Install node.js: https://nodejs.org/en/download/
+2. Clone or download the repository (if using zip extract the zip file)
+3. Change into the folder that was cloned/extracted
+4. Open a terminal and run `npm install`
+
+On Linux you may get an error as keytar needs an additional dependency see [here](https://github.com/atom/node-keytar#on-linux).
+
+5. Then run `npm build` for windows, or `npm run-script build` for linux or for macOS `npm run build`
+6. Then change into the dist directory on windows you will have an exe, on mac a dmg and on linux an appimage file
 
 ### To create a desktop shortcut on Linux do this:
 
