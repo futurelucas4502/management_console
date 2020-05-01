@@ -75,7 +75,9 @@ function createWindow () {
   win.on('close', function (event) {
     event.preventDefault();
     win.hide();
-    app.dock.hide()
+    if (process.platform == 'darwin') {
+      app.dock.hide()
+    }
   });
 
   tray = new Tray(path.join(__dirname, 'assets','images','tray-icon.png'))
@@ -83,7 +85,9 @@ function createWindow () {
   tray.setContextMenu(Menu.buildFromTemplate([{
     label: 'Open', click:  function(){
       win.show();
-      app.dock.show()
+      if (process.platform == 'darwin') {
+        app.dock.show()
+      }
     }},{
     label: 'Quit', click:  function(){
       win.destroy()
@@ -92,7 +96,9 @@ function createWindow () {
     
   tray.on("click",(event,arg)=>{
       win.show();
-      app.dock.show()
+      if (process.platform == 'darwin') {
+        app.dock.show()
+      }
   })
   var checkRemembered = keytar.findCredentials("The City Of Truro Mariners - Management Console")
   checkRemembered.then((result)=>{
@@ -145,7 +151,9 @@ function createWindow () {
       })
     }
     win.show()
-    app.dock.show()
+    if (process.platform == 'darwin') {
+      app.dock.show()
+    }
   })
 }
 
@@ -197,7 +205,9 @@ if (!gotTheLock) {
 } else {
   app.on('second-instance', (event, commandLine, workingDirectory) => {
     win.show()
-    app.dock.show()
+    if (process.platform == 'darwin') {
+      app.dock.show()
+    }
     // Someone tried to run a second instance, we should focus our window.
     if (win) {
       if (win.isMinimized()) win.restore()
@@ -217,7 +227,9 @@ if (!gotTheLock) {
       createWindow()
     }
     win.show();
-    app.dock.show()
+    if (process.platform == 'darwin') {
+      app.dock.show()
+    }
   })
 }
 
@@ -899,7 +911,9 @@ function messageNotify(){
           notification.show()
           notification.on('click', (event, arg)=>{
             win.show()
-            app.dock.show()
+            if (process.platform == 'darwin') {
+              app.dock.show()
+            }
             win.loadFile(path.join(__dirname, 'src','messaging.html'))
             messagesNotificationClick = true
             win.moveTop()
