@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/futurelucas4502/management-console.svg?branch=master)](https://travis-ci.com/futurelucas4502/management-console)
+![Build/release](https://github.com/futurelucas4502/management-console/workflows/Build/release/badge.svg)
 # City of Truro Mariners - Management Console
 A2 Computer Science coursework for the City of Truro Mariners Model Boat Club
 
