@@ -10,6 +10,9 @@ jobs:
   Ubuntu-Get-Version:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+        
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.0.0
