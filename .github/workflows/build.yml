@@ -13,16 +13,6 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v1
 
-      - name: Get version number
-        run: |
-          PACKAGE_VERSION=$(cat package.json \
-          | grep version \
-          | head -1 \
-          | awk -F: '{ print $2 }' \
-          | sed 's/[",]//g' \
-          | tr -d '[[:space:]]')
-          echo "::set-env name=version_num::$PACKAGE_VERSION"
-
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
         with:
@@ -42,10 +32,10 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
           job: Build
-          description: The City of Truro Mariners - Management Console V ${{ PACKAGE_VERSION }} for ubuntu
+          description: The City of Truro Mariners - Management Console Ubuntu
           nofail: false
           nodetail: false
-          color: 0x0000FF
+          color: 0xFFFFFF
           username: Discord CI
           avatar_url: "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
 
@@ -74,10 +64,10 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
           job: Build
-          description: The City of Truro Mariners - Management Console V $PACKAGE_VERSION for windows
+          description: The City of Truro Mariners - Management Console Windows
           nofail: false
           nodetail: false
-          color: 0x0000FF
+          color: 0xFFFFFF
           username: Discord CI
           avatar_url: "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
 
@@ -106,9 +96,9 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
           job: Build
-          description: The City of Truro Mariners - Management Console V $PACKAGE_VERSION for macOS
+          description: The City of Truro Mariners - Management Console macOS
           nofail: false
           nodetail: false
-          color: 0x0000FF
+          color: 0xFFFFFF
           username: Discord CI
           avatar_url: "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
