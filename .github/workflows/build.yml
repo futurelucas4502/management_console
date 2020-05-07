@@ -7,13 +7,16 @@ on:
       - master
 
 jobs:
+  Ubuntu-Get-Version:
+  runs-on: ubuntu-latest
+  steps:
+    - name: get-npm-version
+      id: package-version
+      uses: martinbeentjes/npm-get-version-action@v1.0.0
+
   Ubuntu-Build:
     runs-on: ubuntu-latest
     steps:
-      - name: get-npm-version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@v1.0.0
-      
       - name: Check out Git repository
         uses: actions/checkout@v1
 
@@ -106,4 +109,3 @@ jobs:
           color: 0x0000FF
           username: Discord CI
           avatar_url: "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
-          
