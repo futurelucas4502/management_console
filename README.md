@@ -8,8 +8,6 @@ I had no idea what RPC, Pug.js/Jade.js or EJS was when I made this therefore it 
 
 ## Documentation:
 
-### How to run the program:
-
 https://futurelucas4502.github.io/management-console
 
 ## Website:
