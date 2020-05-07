@@ -8,11 +8,11 @@ on:
 
 jobs:
   Ubuntu-Get-Version:
-  runs-on: ubuntu-latest
-  steps:
-    - name: get-npm-version
-      id: package-version
-      uses: martinbeentjes/npm-get-version-action@v1.0.0
+    runs-on: ubuntu-latest
+    steps:
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.0.0
 
   Ubuntu-Build:
     runs-on: ubuntu-latest
