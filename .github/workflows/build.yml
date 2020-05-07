@@ -8,10 +8,10 @@ on:
 
 jobs:
   Get-Version:
-    - name: get-npm-version
     steps:
-      id: package-version
-      uses: martinbeentjes/npm-get-version-action@v1.0.0
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.0.0
 
   Windows-Build:
     runs-on: windows-latest
