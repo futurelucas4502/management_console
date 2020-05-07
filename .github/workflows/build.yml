@@ -88,29 +88,31 @@ jobs:
         env:
           mac-status: "Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for macOS was cancelled"
 
-- name: Discord notification
-env:
-  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-  DISCORD_USERNAME: Discord CI
-  DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
-uses: Ilshidur/action-discord@master
-  with:
-    args: ${{ ubuntu-status }}
+  Discord-Notify:
+    steps:
+      - name: Discord notification
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        DISCORD_USERNAME: Discord CI
+        DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
+      uses: Ilshidur/action-discord@master
+        with:
+          args: ${{ ubuntu-status }}
 
-- name: Discord notification
-env:
-  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-  DISCORD_USERNAME: Discord CI
-  DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
-uses: Ilshidur/action-discord@master
-  with:
-    args: ${{ windows-status }}
+      - name: Discord notification
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        DISCORD_USERNAME: Discord CI
+        DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
+      uses: Ilshidur/action-discord@master
+        with:
+          args: ${{ windows-status }}
 
-- name: Discord notification
-env:
-  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-  DISCORD_USERNAME: Discord CI
-  DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
-uses: Ilshidur/action-discord@master
-  with:
-    args: ${{ mac-status }}
+      - name: Discord notification
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        DISCORD_USERNAME: Discord CI
+        DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
+      uses: Ilshidur/action-discord@master
+        with:
+          args: ${{ mac-status }}
