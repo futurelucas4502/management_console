@@ -7,6 +7,11 @@ on:
       - master
 
 jobs:
+  Get-Version:
+    - name: get-npm-version
+      id: package-version
+      uses: martinbeentjes/npm-get-version-action@v1.0.0
+
   Windows-Build:
     runs-on: windows-latest
     steps:
@@ -32,7 +37,7 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
           job: Build
-          description: The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows
+          description: The City of Truro Mariners - Management Console V ${{ steps.package-version.outputs.current-version}} for windows
           nofail: false
           nodetail: false
           color: 0x0000FF
@@ -64,7 +69,7 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
           job: Build
-          description: The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows
+          description: The City of Truro Mariners - Management Console V ${{ steps.package-version.outputs.current-version}} for macOS
           nofail: false
           nodetail: false
           color: 0x0000FF
@@ -96,7 +101,7 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
           job: Build
-          description: The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows
+          description: The City of Truro Mariners - Management Console V ${{ steps.package-version.outputs.current-version}} for ubuntu
           nofail: false
           nodetail: false
           color: 0x0000FF
