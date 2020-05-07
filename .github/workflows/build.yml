@@ -23,22 +23,21 @@ jobs:
           npm install
           npm run-script release
 
-      - name: notify-discord-setvar
-        if: ${{ job.status }} == "success"
-        run: echo "::set-env name=windows-status::Successfully built The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows"
-        if: ${{ job.status }} == "failure"
-        run: echo "::set-env name=windows-status::Failed to build The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows"
-        if: ${{ job.status }} == "cancel"
-        run: echo "::set-env name=windows-status::Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows was cancelled"
-      
-      - name: Discord notification Windows
-      env:
-        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        DISCORD_USERNAME: Discord CI
-        DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
-      uses: Ilshidur/action-discord@master
+      - name: Post status to Discord
+        uses: sarisia/actions-status-discord@v1
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        if: always()
         with:
-          args: ${{ windows-status }}
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          job: Build
+          description: The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows
+          nofail: false
+          nodetail: false
+          color: 0x0000FF
+          username: Discord CI
+          avatar_url: "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
 
   macOS-Build:
     runs-on: macos-latest
@@ -56,22 +55,21 @@ jobs:
           npm install
           npm run release
       
-      - name: notify-discord-setvar
-        if: ${{ job.status }} == "success"
-        run: echo "::set-env name=mac-status::Successfully built The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for macOS"
-        if: ${{ job.status }} == "failure"
-        run: echo "::set-env name=mac-status::Failed to build The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for macOS"
-        if: ${{ job.status }} == "cancel"
-        run: echo "::set-env name=mac-status::Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for macOS was cancelled"
-
-      - name: Discord notification macOS
-      env:
-        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        DISCORD_USERNAME: Discord CI
-        DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
-      uses: Ilshidur/action-discord@master
+      - name: Post status to Discord
+        uses: sarisia/actions-status-discord@v1
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        if: always()
         with:
-          args: ${{ mac-status }}
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          job: Build
+          description: The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows
+          nofail: false
+          nodetail: false
+          color: 0x0000FF
+          username: Discord CI
+          avatar_url: "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
 
   Ubuntu-Build:
     runs-on: ubuntu-latest
@@ -89,19 +87,18 @@ jobs:
           npm install
           npm run-script release
 
-      - name: notify-discord-setvar
-        if: ${{ job.status }} == "success"
-        run: echo "::set-env name=ubuntu-status::Successfully built The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for ubuntu"
-        if: ${{ job.status }} == "failure"
-        run: echo "::set-env name=ubuntu-status::Failed to build The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for ubuntu"
-        if: ${{ job.status }} == "cancel"
-        run: echo "::set-env name=ubuntu-status::Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for ubuntu was cancelled"
-
-      - name: Discord notification Ubuntu
-      env:
-        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        DISCORD_USERNAME: Discord CI
-        DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
-      uses: Ilshidur/action-discord@master
+      - name: Post status to Discord
+        uses: sarisia/actions-status-discord@v1
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        if: always()
         with:
-          args: ${{ ubuntu-status }}
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          job: Build
+          description: The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows
+          nofail: false
+          nodetail: false
+          color: 0x0000FF
+          username: Discord CI
+          avatar_url: "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
