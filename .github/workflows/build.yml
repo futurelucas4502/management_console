@@ -42,7 +42,7 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
           job: Build
-          description: The City of Truro Mariners - Management Console V $PACKAGE_VERSION for ubuntu
+          description: The City of Truro Mariners - Management Console V ${{ PACKAGE_VERSION }} for ubuntu
           nofail: false
           nodetail: false
           color: 0x0000FF
