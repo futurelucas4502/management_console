@@ -2,9 +2,6 @@ name: Build/release
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches:
       - master
@@ -26,6 +23,54 @@ jobs:
           npm install
           npm run-script release
 
+      - name: ubuntu-success
+        if: ${{ job.status }} == "success"
+        steps:
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+            DISCORD_USERNAME: Discord CI
+            DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
+          uses: Ilshidur/action-discord@master
+          with:
+            args: 'Successfully built The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for linux'
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          uses: Ilshidur/action-discord@master
+          
+      - name: ubuntu-fail
+      if: ${{ job.status }} == "failure"
+      steps:
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+            DISCORD_USERNAME: Discord CI
+            DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
+          uses: Ilshidur/action-discord@master
+          with:
+            args: 'Failed to build The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for linux'
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          uses: Ilshidur/action-discord@master
+
+      - name: ubuntu-cancelled
+        if: ${{ job.status }} == "cancel"
+        steps:
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+            DISCORD_USERNAME: Discord CI
+            DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
+          uses: Ilshidur/action-discord@master
+          with:
+            args: 'Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for linux was cancelled'
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          uses: Ilshidur/action-discord@master
+
   Windows-Build:
     runs-on: windows-latest
     steps:
@@ -42,6 +87,54 @@ jobs:
           npm install
           npm run-script release
 
+      - name: win-success
+        if: ${{ job.status }} == "success"
+        steps:
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+            DISCORD_USERNAME: Discord CI
+            DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
+          uses: Ilshidur/action-discord@master
+          with:
+            args: 'Successfully built The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows'
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          uses: Ilshidur/action-discord@master
+          
+      - name: win-fail
+      if: ${{ job.status }} == "failure"
+      steps:
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+            DISCORD_USERNAME: Discord CI
+            DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
+          uses: Ilshidur/action-discord@master
+          with:
+            args: 'Failed to build The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows'
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          uses: Ilshidur/action-discord@master
+
+      - name: win-cancelled
+        if: ${{ job.status }} == "cancel"
+        steps:
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+            DISCORD_USERNAME: Discord CI
+            DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
+          uses: Ilshidur/action-discord@master
+          with:
+            args: 'Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows was cancelled'
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          uses: Ilshidur/action-discord@master
+
   macOS-Build:
     runs-on: macos-latest
     steps:
@@ -57,3 +150,51 @@ jobs:
         run: |
           npm install
           npm run release
+      
+      - name: mac-success
+        if: ${{ job.status }} == "success"
+        steps:
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+            DISCORD_USERNAME: Discord CI
+            DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
+          uses: Ilshidur/action-discord@master
+          with:
+            args: 'Successfully built The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for macOS'
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          uses: Ilshidur/action-discord@master
+          
+      - name: mac-fail
+      if: ${{ job.status }} == "failure"
+      steps:
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+            DISCORD_USERNAME: Discord CI
+            DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
+          uses: Ilshidur/action-discord@master
+          with:
+            args: 'Failed to build The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for macOS'
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          uses: Ilshidur/action-discord@master
+
+      - name: mac-cancelled
+        if: ${{ job.status }} == "cancel"
+        steps:
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+            DISCORD_USERNAME: Discord CI
+            DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
+          uses: Ilshidur/action-discord@master
+          with:
+            args: 'Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for macOS was cancelled'
+        - name: Discord notification
+          env:
+            DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          uses: Ilshidur/action-discord@master

@@ -1,4 +1,4 @@
-const { ipcMain, app, BrowserWindow, Menu, dialog, Notification, Tray } = require('electron')
+const { ipcMain, app, BrowserWindow, Menu, dialog, Notification, Tray, shell } = require('electron')
 const path = require('path');
 const { autoUpdater } = require('electron-updater');
 const request = require('request');
@@ -22,6 +22,9 @@ var messagesNotificationClick = false
 // create an empty array
 var array = [];
 const gotTheLock = app.requestSingleInstanceLock()
+if (process.platform === 'linux') {
+  app.commandLine.appendSwitch('--no-sandbox')
+}
 
  
 contextMenu({}); // Creates default right click menu
@@ -75,7 +78,7 @@ function createWindow () {
   win.on('close', function (event) {
     event.preventDefault();
     win.hide();
-    if (process.platform == 'darwin') {
+    if (process.platform === 'darwin') {
       app.dock.hide()
     }
   });
@@ -85,7 +88,7 @@ function createWindow () {
   tray.setContextMenu(Menu.buildFromTemplate([{
     label: 'Open', click:  function(){
       win.show();
-      if (process.platform == 'darwin') {
+      if (process.platform === 'darwin') {
         app.dock.show()
       }
     }},{
@@ -96,7 +99,7 @@ function createWindow () {
     
   tray.on("click",(event,arg)=>{
       win.show();
-      if (process.platform == 'darwin') {
+      if (process.platform === 'darwin') {
         app.dock.show()
       }
   })
@@ -105,10 +108,11 @@ function createWindow () {
     if (result.length != 0) {
       currentusername = result[0].account
       currentpassword = result[0].password
+      win.webContents.send("auto-login")
       request.post({url:connectionurl, form: {formname:"login",username:currentusername,password:currentpassword,datetime:require('moment')().format('YYYY-MM-DD HH:mm:ss')}},function(err,_,body){
         if (err) {
           keytar.deletePassword("The City Of Truro Mariners - Management Console", currentusername)
-          event.sender.send("incorrect")
+          win.webContents.send("incorrect")
           if (!dialogOpen){
             dialogOpen = true
             return dialog.showMessageBox(win,connectionErrorMessage).then(response => {
@@ -122,7 +126,7 @@ function createWindow () {
         }
         if (body == "Query Error"){
           keytar.deletePassword("The City Of Truro Mariners - Management Console", currentusername)
-          event.sender.send("incorrect")
+          win.webContents.send("incorrect")
           if (!dialogOpen){
             dialogOpen = true
             return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
@@ -136,7 +140,7 @@ function createWindow () {
           admincheck = false
         } else {
           keytar.deletePassword("The City Of Truro Mariners - Management Console", currentusername)
-          event.sender.send("incorrect")
+          win.webContents.send("incorrect")
           if (!dialogOpen){
             dialogOpen = true
             return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Unknown Error',message: 'An unknown error eccured please check your internet connection or try and visit https://lucas-testing.000webhostapp.com if it fails your service provider may be blocking us if however you can connect this is likely a server issue if it happens repeatedly contact me at lucaswilson4502@outlook.com'}).then(response => {
@@ -151,7 +155,7 @@ function createWindow () {
       })
     }
     win.show()
-    if (process.platform == 'darwin') {
+    if (process.platform === 'darwin') {
       app.dock.show()
     }
   })
@@ -205,7 +209,7 @@ if (!gotTheLock) {
 } else {
   app.on('second-instance', (event, commandLine, workingDirectory) => {
     win.show()
-    if (process.platform == 'darwin') {
+    if (process.platform === 'darwin') {
       app.dock.show()
     }
     // Someone tried to run a second instance, we should focus our window.
@@ -227,7 +231,7 @@ if (!gotTheLock) {
       createWindow()
     }
     win.show();
-    if (process.platform == 'darwin') {
+    if (process.platform === 'darwin') {
       app.dock.show()
     }
   })
@@ -911,7 +915,7 @@ function messageNotify(){
           notification.show()
           notification.on('click', (event, arg)=>{
             win.show()
-            if (process.platform == 'darwin') {
+            if (process.platform === 'darwin') {
               app.dock.show()
             }
             win.loadFile(path.join(__dirname, 'src','messaging.html'))
@@ -1106,7 +1110,6 @@ ipcMain.on("edit-expend",(event,arg)=>{
 ipcMain.on("delete-expend", (event, arg) => {
   if(encrypt(arg.password) == currentpassword){
     request.post({url:connectionurl, form: {formname:"deleteExpend",username:currentusername,password:currentpassword,ID:arg.ID}},function(err,_,body){
-      console.log(body)
       if (err) {
         if (!dialogOpen){
           dialogOpen = true
@@ -1138,6 +1141,309 @@ ipcMain.on("delete-expend", (event, arg) => {
   }
 })
 
+ipcMain.on("loadPayments",(event, arg)=>{
+  request.post({url:connectionurl, form: {formname:"loadPayments",username:currentusername,password:currentpassword}},function(err,_,body){
+    if (err) {
+      if (!dialogOpen){
+        dialogOpen = true
+        return dialog.showMessageBox(win,connectionErrorMessage).then(response => {
+          dialogOpen = false
+        });
+      }
+    }
+    if (body == "Unauthorised"){
+      return logout(true);
+    }
+    event.sender.send('paymentsData', body)
+  })
+})
+
+ipcMain.on("edit-payment",(event,arg)=>{
+  request.post({url:connectionurl, form: {formname:"editPayment",username:currentusername,password:currentpassword,description:arg.description,datetime:arg.datetime,inPerson:arg.inPerson,member:arg.username,amount:arg.amount,ID:arg.ID}},function(err,_,body){
+    if (err) {
+      if (!dialogOpen){
+        dialogOpen = true
+        return dialog.showMessageBox(win,connectionErrorMessage).then(response => {
+          dialogOpen = false
+        });
+      }
+    }
+    if (body == "Unauthorised"){
+      return logout(true);
+    }
+    if (body == "Query Error"){
+      if (!dialogOpen){
+        dialogOpen = true
+        return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+          dialogOpen = false
+        });
+      }
+    }
+  })
+})
+
+ipcMain.on("delete-payment", (event, arg) => {
+  if(encrypt(arg.password) == currentpassword){
+    request.post({url:connectionurl, form: {formname:"deletePayment",username:currentusername,password:currentpassword,ID:arg.ID}},function(err,_,body){
+      if (err) {
+        if (!dialogOpen){
+          dialogOpen = true
+          return dialog.showMessageBox(win,connectionErrorMessage).then(response => {
+            dialogOpen = false
+          });
+        }
+      }
+      if (body == "Unauthorised"){
+        return logout(true);
+      }
+      if (body == "Query Error"){
+        if (!dialogOpen){
+          dialogOpen = true
+          return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+            dialogOpen = false
+          });
+        }
+      }
+      win.reload()
+  })} else {
+    if (!dialogOpen){
+      dialogOpen = true
+      dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Delete Error',message: 'Incorrect Password!'}).then(response => {
+        dialogOpen = false
+      });
+    }
+    event.sender.send("payment-delete-incorrect")
+  }
+})
+
+ipcMain.on("attend-event", (event, id, title) => {
+  request.post({url:connectionurl, form: {formname:"attendEvent",username:currentusername,password:currentpassword,title:title,id:id}},function(err,_,body){
+    if (err) {
+      if (!dialogOpen){
+        dialogOpen = true
+        return dialog.showMessageBox(win,connectionErrorMessage).then(response => {
+          dialogOpen = false
+        });
+      }
+    }
+    if (body == "Unauthorised"){
+      return logout(true);
+    }
+    if (body == "Query Error"){
+      if (!dialogOpen){
+        dialogOpen = true
+        return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+          dialogOpen = false
+        });
+      }
+    }
+  })
+})
+
+ipcMain.on("event-attending-ready", (event, arg) => {
+  request.post({url:connectionurl, form: {formname:"eventsAttendingReady",username:currentusername,password:currentpassword}},function(err,_,body){
+    if (err) {
+      if (!dialogOpen){
+        dialogOpen = true
+        return dialog.showMessageBox(win,connectionErrorMessage).then(response => {
+          dialogOpen = false
+        });
+      }
+    }
+    if (body == "Unauthorised"){
+      return logout(true);
+    }
+    event.sender.send('event-attending-data', body)
+  })
+})
+
+ipcMain.on("load-all-attending", (event, arg) => {
+  request.post({url:connectionurl, form: {formname:"loadAllAttending",username:currentusername,password:currentpassword}},function(err,_,body){
+    if (err) {
+      if (!dialogOpen){
+        dialogOpen = true
+        return dialog.showMessageBox(win,connectionErrorMessage).then(response => {
+          dialogOpen = false
+        });
+      }
+    }
+    if (body == "Unauthorised"){
+      return logout(true);
+    }
+    event.sender.send('event-attending-data-all', body)
+  })
+})
+
+ipcMain.on("un-attend", (event, id) => {
+  request.post({url:connectionurl, form: {formname:"unattendEvent",username:currentusername,password:currentpassword,id:id}},function(err,_,body){
+    if (err) {
+      if (!dialogOpen){
+        dialogOpen = true
+        return dialog.showMessageBox(win,connectionErrorMessage).then(response => {
+          dialogOpen = false
+        });
+      }
+    }
+    if (body == "Unauthorised"){
+      return logout(true);
+    }
+    if (body == "Query Error"){
+      if (!dialogOpen){
+        dialogOpen = true
+        return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+          dialogOpen = false
+        });
+      }
+    }
+  })
+})
+
+ipcMain.on("change-username", (event, arg) => {
+  if(arg.username == "" || arg.username == null || arg.username == ''){
+    if (!dialogOpen){
+      dialogOpen = true
+      return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Username Error',message: 'Please enter a username it cannot be blank.'}).then(response => {
+        dialogOpen = false
+      });
+    }
+  }
+  if(encrypt(arg.password) == currentpassword){
+    request.post({url:connectionurl, form: {formname:"changeUsername",username:currentusername,password:currentpassword,updateUsername:arg.username}},function(err,_,body){
+      if (err) {
+        if (!dialogOpen){
+          dialogOpen = true
+          return dialog.showMessageBox(win,connectionErrorMessage).then(response => {
+            dialogOpen = false
+          });
+        }
+      }
+      if (body == "Unauthorised"){
+        return logout(true);
+      }
+      if (body == "Query Error"){
+        if (!dialogOpen){
+          dialogOpen = true
+          return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+            dialogOpen = false
+          });
+        }
+      }
+      try {keytar.deletePassword("The City Of Truro Mariners - Management Console", currentusername)} catch {}
+      currentusername = arg.username
+      win.reload()
+      if (!dialogOpen){
+          dialogOpen = true
+          return dialog.showMessageBox(win,{type: 'info',buttons: ['OK'],title: 'Success',message: 'Your username was successfully changed!'}).then(response => {
+            dialogOpen = false
+          });
+        }
+  })} else {
+    if (!dialogOpen){
+      dialogOpen = true
+      dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Error',message: 'Incorrect Password!'}).then(response => {
+        dialogOpen = false
+      });
+    }
+    event.sender.send("change-username-incorrect")
+  }
+})
+
+ipcMain.on("change-password", (event, arg) => {
+  if(arg.password == "" || arg.password == null || arg.password == '' || arg.newpassword != arg.newPasswordConfirm || arg.newpassword == "" || arg.newpassword == null || arg.newpassword == ''){
+    if (!dialogOpen){
+      dialogOpen = true
+      return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Error',message: 'Password is either blank or not the same.'}).then(response => {
+        dialogOpen = false
+      });
+    }
+  }
+  if(encrypt(arg.password) == currentpassword){
+    request.post({url:connectionurl, form: {formname:"changePassword",username:currentusername,password:currentpassword,updatePassword:encrypt(arg.newpassword)}},function(err,_,body){
+      if (err) {
+        if (!dialogOpen){
+          dialogOpen = true
+          return dialog.showMessageBox(win,connectionErrorMessage).then(response => {
+            dialogOpen = false
+          });
+        }
+      }
+      if (body == "Unauthorised"){
+        return logout(true);
+      }
+      if (body == "Query Error"){
+        if (!dialogOpen){
+          dialogOpen = true
+          return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+            dialogOpen = false
+          });
+        }
+      }
+        var checkRemembered = keytar.findCredentials("The City Of Truro Mariners - Management Console")
+        checkRemembered.then((result)=>{
+          if (result.length != 0) {
+            try {keytar.deletePassword("The City Of Truro Mariners - Management Console", currentusername)} catch {}
+            currentpassword = encrypt(arg.newpassword)
+            try {keytar.setPassword("The City Of Truro Mariners - Management Console", currentusername, currentpassword)} catch {}
+          }
+        })
+      win.reload()
+      if (!dialogOpen){
+          dialogOpen = true
+          return dialog.showMessageBox(win,{type: 'info',buttons: ['OK'],title: 'Success',message: 'Your password was successfully changed!'}).then(response => {
+            dialogOpen = false
+          });
+        }
+  })} else {
+    if (!dialogOpen){
+      dialogOpen = true
+      dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Error',message: 'Incorrect Current Password!'}).then(response => {
+        dialogOpen = false
+      });
+    }
+    event.sender.send("change-password-incorrect")
+  }
+})
+
+ipcMain.on("change-email", (event, arg) => {
+  if(encrypt(arg.password) == currentpassword){
+    request.post({url:connectionurl, form: {formname:"changeEmail",username:currentusername,password:currentpassword,updateEmail:arg.email}},function(err,_,body){
+      if (err) {
+        if (!dialogOpen){
+          dialogOpen = true
+          return dialog.showMessageBox(win,connectionErrorMessage).then(response => {
+            dialogOpen = false
+          });
+        }
+      }
+      if (body == "Unauthorised"){
+        return logout(true);
+      }
+      if (body == "Query Error"){
+        if (!dialogOpen){
+          dialogOpen = true
+          return dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Server Error',message: 'A Server Error Occured Please Try Again If This Has Happened Multiple Times Contact Me At: lucaswilson4502@outlook.com'}).then(response => {
+            dialogOpen = false
+          });
+        }
+      }
+      win.reload()
+      if (!dialogOpen){
+          dialogOpen = true
+          return dialog.showMessageBox(win,{type: 'info',buttons: ['OK'],title: 'Success',message: 'Your email was successfully changed!'}).then(response => {
+            dialogOpen = false
+          });
+        }
+  })} else {
+    if (!dialogOpen){
+      dialogOpen = true
+      dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Error',message: 'Incorrect Password!'}).then(response => {
+        dialogOpen = false
+      });
+    }
+    event.sender.send("change-email-incorrect")
+  }
+})
+
 // In Program Scripts:
 
 ipcMain.on('logout', function(event, arg) {
@@ -1157,6 +1463,7 @@ function logout(authFail) {
         dialogOpen = true
         dialog.showMessageBox(win,{type: 'error',buttons: ['OK'],title: 'Error',message: 'Unauthorised Access!'}).then(response => {
           dialogOpen = false
+          authFail = false
         });
       }
     }
@@ -1220,4 +1527,8 @@ ipcMain.on("save-file",(event,arg,extension)=>{
 ipcMain.on("update-check",(event,arg)=>{
   // Runs auto updater
   autoUpdater.checkForUpdatesAndNotify();
+})
+
+ipcMain.on("payment-online", (event,arg) => {
+  shell.openExternal('https://dashboard.stripe.com/test/payments/'+arg)
 })

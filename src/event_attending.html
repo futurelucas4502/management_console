@@ -11,46 +11,46 @@
     <link rel="preload" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css" as="style">
     <link rel="preload" href="../assets/css/tempusdominus-bootstrap-4.min.css" as="style">
     <link href="../assets/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet">
+    <link href="../assets/css/index.css" rel="stylesheet">
     <link href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/css/index.css" rel="stylesheet">
     <link href="../assets/css/floating-labels.css" rel="stylesheet">
-    <title>Members</title>
+    <title>Events Attending</title>
 </head>
 <body>
-  <div class="row">
-    <div class="col-1 d-flex justify-content-center">
-      <div id="mySidenav" class="sidenav">
-        <div id="payments">
-          <a style="display: inline-block;padding-right:8px" href="./payments.html">Payments</a>
-          <i style="color: #818181!important;font-size: 17.5px;cursor:pointer;" class="fa fa-chevron-right"></i>
-        </div>
-        <div id="dropdown3" style="overflow:hidden;padding: 0;display:none;" aria-labelledby="payments">
-          <a style="cursor:pointer;background-color: #F0F0F0" onclick="addMembershipPayment()" data-toggle="modal" data-target="#MembershipPayment">Add membership payment</a>
+    <div class="row">
+        <div class="col-1 d-flex justify-content-center">
+          <div id="mySidenav" class="sidenav">
+            <div id="payments">
+              <a style="display: inline-block;padding-right:8px" href="./payments.html">Payments</a>
+              <i style="color: #818181!important;font-size: 17.5px;cursor:pointer;" class="fa fa-chevron-right"></i>
+            </div>
+            <div id="dropdown3" style="overflow:hidden;padding: 0;display:none;" aria-labelledby="payments">
+              <a style="cursor:pointer;background-color: #F0F0F0" onclick="addMembershipPayment()" data-toggle="modal" data-target="#MembershipPayment">Add membership payment</a>
+              </div>
+              <a id="accounting" href="./accounting.html">Accounting</a>
+            <div id="members">
+              <a style="display: inline-block;padding-right:8px" href="./members.html">Members</a>
+              <i style="color: #818181!important;font-size: 17.5px;cursor:pointer;" class="fa fa-chevron-right"></i>
+            </div>
+            <div id="dropdown1" style="overflow:hidden;padding: 0;display:none;" aria-labelledby="members">
+              <a style="cursor:pointer;background-color: #F0F0F0" onclick="addMembers()" data-toggle="modal" data-target="#addMemberModal">Add member</a>
+              </div>
+            <div id="events">
+              <a style="display: inline-block;padding-right:8px" href="./events.html">Events</a>
+              <i style="color: #818181!important;font-size: 17.5px;cursor:pointer;" class="fa fa-chevron-right"></i>
+            </div>
+            <div id="dropdown2" style="overflow:hidden;padding: 0;display:none;" aria-labelledby="events">
+                <a style="cursor:pointer;background-color: #F0F0F0" href="event_attending.html">Events Attending</a>
+                <a style="cursor:pointer;background-color: #F0F0F0" onclick="addEvent()" data-toggle="modal" data-target="#addEventModal">Add event</a>
+            </div>
+            <a href="./main.html">Main</a>
+            <a href="./messaging.html">Messaging</a>
+            <a href="./settings.html">Settings</a>
+            <a class="logoutbtn abs-center-x" onclick="Logout()" id="logoutBtn" style="bottom: 10px;">Logout</a>
           </div>
-          <a id="accounting" href="./accounting.html">Accounting</a>
-        <div id="members">
-          <a style="display: inline-block;padding-right:8px" href="./members.html">Members</a>
-          <i style="color: #818181!important;font-size: 17.5px;cursor:pointer;" class="fa fa-chevron-right"></i>
         </div>
-        <div id="dropdown1" style="overflow:hidden;padding: 0;display:none;" aria-labelledby="members">
-          <a style="cursor:pointer;background-color: #F0F0F0" onclick="addMembers()" data-toggle="modal" data-target="#addMemberModal">Add member</a>
-          </div>
-          <div id="events">
-            <a style="display: inline-block;padding-right:8px" href="./events.html">Events</a>
-            <i style="color: #818181!important;font-size: 17.5px;cursor:pointer;" class="fa fa-chevron-right"></i>
-          </div>
-          <div id="dropdown2" style="overflow:hidden;padding: 0;display:none;" aria-labelledby="events">
-            <a style="cursor:pointer;background-color: #F0F0F0" href="event_attending.html">Events Attending</a>
-            <a style="cursor:pointer;background-color: #F0F0F0" onclick="addEvent()" data-toggle="modal" data-target="#addEventModal">Add event</a>
-        </div>
-        <a href="./main.html">Main</a>
-        <a href="./messaging.html">Messaging</a>
-        <a href="./settings.html">Settings</a>
-        <a class="logoutbtn abs-center-x" onclick="Logout()" id="logoutBtn" style="bottom: 10px;">Logout</a>
       </div>
-    </div>
-  </div>
 
 <!--Navbar-->
 <nav class="navbar navbar-light bg-light sticky-top" style="box-shadow: 0px 0px 8px #888888;">
@@ -58,22 +58,23 @@
   <button class="navbar-toggler hamburger-button" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation" onclick="Nav()" style="z-index: 2"><div class="animated-icon"><span></span><span></span><span></span></div></button>
   <!-- Navbar brand -->
   <div class="mx-auto order-0 abs-center-x">
-    <a class="navbar-brand mx-auto" href="./members.html">Members</a>
+    <a class="navbar-brand mx-auto" href="./event_attending.html">Events Attending</a>
 </div>
   <img src="../assets/images/embelem.webp" alt="Embelem" width="40" height="40">
 </nav>
 <!--/.Navbar-->
+<a id="totalEvents" style="float:left;padding: 0.75rem;text-decoration: none;font-size: 25px;color: #818181!important;"></a>
 
-  <a id="totalMembers" style="float:left;padding: 0.75rem;text-decoration: none;font-size: 25px;color: #818181!important;"></a>
-
-  <!-- Button trigger add modal -->
-<button id="addMember" type="button" onclick="addMembers()" class="btn btn-success" style="float:right;margin: 8px 8px 8px 8px;display:none!important;padding:.75rem;" data-toggle="modal" data-target="#addMemberModal">Add member</button>
-
-<!-- Search -->
-<div id="SearchBox" class="form-label-group" style=" float: right; margin: 8px 8px 8px 0px; position: relative; display: none;">
-  <input id="SearchBoxInput" class="form-control" placeholder="Username Search">
-  <label for="SearchBoxInput">Username Search...</label>
+<div style="display:none;" id="buttons">
+  <button type="button" class="btn btn-primary" onclick="loadAllAttend()" style="float:right;margin: 8px 8px 8px 8px;padding:.75rem;">Load all attending</button>
+  <button type="button" class="btn btn-primary" onclick="loadPersonalAttend()" style="float:right;margin: 8px 8px 8px 8px;padding:.75rem;">Load personal attending</button>
 </div>
+
+  <!-- Search -->
+  <div id="SearchBox" class="form-label-group" style=" float: right; margin: 8px 8px 8px 0px; position: relative; display: none;">
+    <input id="SearchBoxInput" class="form-control" placeholder="Event Search">
+    <label for="SearchBoxInput">Event Search...</label>
+  </div>
 
 <!-- Add member modal -->
 <div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="addMemberModalLabel" aria-hidden="true">
@@ -170,71 +171,6 @@
 
 <div id="table"><a class="abs-center-x" style="padding: 8px;font-size: 25px;color: #818181!important;"><span class="spinner-border m-1" style="width: 1.25rem;height: 1.25rem;border-width: .2rem;" role="status" aria-hidden="true"></span>Loading...</a></div>
 
-<!-- Edit member modal -->
-<div class="modal fade" id="editMemberModal" tabindex="-1" role="dialog" aria-labelledby="editMemberModalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editMemberModalTitle">Edit member</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <form name="editMember" onsubmit="editUserConfirm()">
-              <div class="form-group">
-                  <label for="usernameEdit">Username</label>
-                  <input  class="form-control" id="usernameEdit" type="text" placeholder="" readonly>
-                </div>
-              <div class="form-group">
-                <label for="emailEdit">Email address</label>
-                <input type="email" class="form-control" id="emailEdit" required="true" placeholder="name@example.com">
-              </div>
-              <div class="form-group">
-                <label for="userTypeEdit">User type</label>
-                <select class="form-control" id="userTypeEdit">
-                  <option>Standard</option>
-                  <option>Admin</option>
-                </select>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success">Edit</button>
-              </div>
-            </form>
-          </div>
-    </div>
-  </div>
-</div>
-<!-- End edit member modal -->
-
-<!-- Delete member modal -->
-<div class="modal fade" id="deleteMemberModal" tabindex="-1" role="dialog" aria-labelledby="deleteMemberModalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteMemberModalTitle">Are you sure you want to delete the user "<span id="deleteusername"></span>"?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <form name="deleteMember" onsubmit="deleteUserConfirm();return false">
-            <div class="form-group">
-              <label for="confirmPassword">Enter your password:</label>
-              <input type="password" class="form-control" id="confirmPassword">
-            </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success">Delete</button>
-              </div>
-            </form>
-          </div>
-    </div>
-  </div>
-</div>
-<!-- End delete member modal -->
-
 <!-- Membership Payment modal -->
 <div class="modal fade" id="MembershipPayment" tabindex="-1" role="dialog" aria-labelledby="MembershipPaymentLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -276,9 +212,8 @@
 </div>
 <!-- End Membership Payment modal -->
 
-
-<tint id="tint" class="tinthidden" onclick="tint()">
-<!--JavaScript at end of body for optimized loading-->
+<tint id="tint" class="tinthidden" onclick="tint()"></tint>
+    <!--JavaScript at end of body for optimized loading-->
 <script type="text/javascript" src="./js/index.js"></script>
 </body>
 </html>
