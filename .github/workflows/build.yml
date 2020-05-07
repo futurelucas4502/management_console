@@ -7,22 +7,6 @@ on:
       - master
 
 jobs:
-  Ubuntu-Build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v1
-
-      - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
-
-      - name: Build/release Electron app
-        run: |
-          npm install
-          npm run-script release
-
   Windows-Build:
     runs-on: windows-latest
     steps:
@@ -39,6 +23,22 @@ jobs:
           npm install
           npm run-script release
 
+      - name: Post status to Discord
+        uses: sarisia/actions-status-discord@v1
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          job: Build
+          description: The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows
+          nofail: false
+          nodetail: false
+          color: 0x0000FF
+          username: Discord CI
+          avatar_url: "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
+
   macOS-Build:
     runs-on: macos-latest
     steps:
@@ -54,3 +54,51 @@ jobs:
         run: |
           npm install
           npm run release
+      
+      - name: Post status to Discord
+        uses: sarisia/actions-status-discord@v1
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          job: Build
+          description: The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows
+          nofail: false
+          nodetail: false
+          color: 0x0000FF
+          username: Discord CI
+          avatar_url: "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
+
+  Ubuntu-Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Build/release Electron app
+        run: |
+          npm install
+          npm run-script release
+
+      - name: Post status to Discord
+        uses: sarisia/actions-status-discord@v1
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          job: Build
+          description: The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows
+          nofail: false
+          nodetail: false
+          color: 0x0000FF
+          username: Discord CI
+          avatar_url: "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"

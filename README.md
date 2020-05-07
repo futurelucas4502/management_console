@@ -4,13 +4,15 @@ A2 Computer Science coursework for the City of Truro Mariners Model Boat Club
 
 API is closed source as it handles payments therefore has private keys etc
 
+I had no idea what RPC, Pug.js/Jade.js or EJS was when I made this therefore it doesn't use these things and therefore the coding isn't the greatest but it's secure fast and it works (most of the time) :P
+
 ## Documentation:
 
 ### How to run the program:
 
 * On Windows you can just run the exe
-* On macOS you can run the dmg and install it (turns out thats a lie it will be fixed next monday (4th may as it's my b day therefore i'll be 18 and be able to use an apple dev license to code sign correctly))
-* On linux you get an AppImage the idea is that an AppImage will work on any linux system whether it runs with debian or not it works like a portable application that doesnt get installed and to run it you must do this (below is an example for version 1.0.26 on arm64):
+* On macOS you can run the dmg and install it (Currently auto updating isn't working due to codesigning I need to ring apple at some point)
+* On linux you get an AppImage the idea is that an AppImage will work on any linux system whether it runs with debian or not it works like a portable application that doesnt get installed and to run it you must do this as right now the sandbox is broken see [here](https://github.com/electron-userland/electron-builder/issues/4922)(below is a working example for version 1.0.26 on arm64):
     1. Give the AppImage the correct permissions like so (this only needs to be done once on the file) `sudo chmod a+x ./The\ City\ Of\ Truro\ Mariners\ -\ Management\ Console-1.0.26-arm64.AppImage`
     2. Then run this `./The\ City\ Of\ Truro\ Mariners\ -\ Management\ Console-1.0.26-arm64.AppImage --no-sandbox`
 
@@ -28,7 +30,7 @@ On Linux you may get an error as keytar needs an additional dependency see [here
 5. Then run `npm build` for windows, or `npm run-script build` for linux or for macOS `npm run build`
 6. Then change into the dist directory on windows you will have an exe, on mac a dmg and on linux an appimage file
 
-### To create a desktop shortcut on Linux do this:
+### To create a desktop shortcut on Linux do this (when the sandbox is fixed this won't need to be done):
 
 1. Move the AppImage to anywhere you want it. (in this example it will be in the same folder as the shortcut)
 2. Next open terminal and run `>Management-Console.sh`

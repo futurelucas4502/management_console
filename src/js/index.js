@@ -75,8 +75,13 @@ $(document).ready(() => {
       $(function () {
         $('#datetimepicker5').datetimepicker({
           format: 'DD/MM/YYYY HH:mm'
+        });
       });
-    });
+      $(function () {
+        $('#datetimepicker6').datetimepicker({
+          format: 'DD/MM/YYYY HH:mm'
+        });
+      });
       
     })
     require("bootstrap")
@@ -163,6 +168,9 @@ function tint() {
   if(document.title === "Accounting"){
     ipcRenderer.send("accounting-ready")
   }
+  if(document.title === "Events Attending"){
+    ipcRenderer.send("event-attending-ready")
+  }
  })
 
 // Events.js:
@@ -187,7 +195,7 @@ ipcRenderer.on('event-data', (event, arg) => {
         var description = "'" + loadedData[i].description + "'"
         var datetime = "'" + moment(loadedData[i].datetime).format("DD/MM/YYYY HH:mm") + "'"
         var location = "'" + loadedData[i].location + "'"
-        table +='<tr><td class="mytd" style="vertical-align: middle;" scope="row">'+ loadedData[i].title +'</td><td class="mytd" style="vertical-align: middle;">'+ loadedData[i].description +'</td><td class="mytd" style="vertical-align: middle;">'+moment(loadedData[i].datetime).format("DD/MM/YYYY HH:mm")+'</td><td class="mytd" style="vertical-align: middle;">'+loadedData[i].location+'</td><td class="mytd" style="vertical-align: middle;">'+loadedData[i].submitted_by+'</td><td class="mytd" style="vertical-align: middle;">'+accepted+'</td><td class="mytd"><button type="button" class="btn btn-info" style="margin-right: 10px;" onclick="editEvent('+ acceptedquotes +','+ title +','+ description +','+ datetime +','+ location +','+ id +')" >&#9998; Edit</button><button type="submit" style="margin-right: 10px;" class="btn btn-danger" onclick="deleteEventFunc(' + id + ','+title+')">&#9888; Delete</button></td></tr>';
+        table +='<tr><td class="mytd" style="vertical-align: middle;" scope="row">'+ loadedData[i].title +'</td><td class="mytd" style="vertical-align: middle;">'+ loadedData[i].description +'</td><td class="mytd" style="vertical-align: middle;">'+moment(loadedData[i].datetime).format("DD/MM/YYYY HH:mm")+'</td><td class="mytd" style="vertical-align: middle;">'+loadedData[i].location+'</td><td class="mytd" style="vertical-align: middle;">'+loadedData[i].submitted_by+'</td><td class="mytd" style="vertical-align: middle;">'+accepted+'</td><td class="mytd"><button type="submit" style="margin-right: 10px;" class="btn btn-success" onclick="attendEventFunc(' + id + ','+title+')">&check; Confirm Attendence</button><button type="button" class="btn btn-info" style="margin-right: 10px;" onclick="editEvent('+ acceptedquotes +','+ title +','+ description +','+ datetime +','+ location +','+ id +')" >&#9998; Edit</button><button type="submit" style="margin-right: 10px;" class="btn btn-danger" onclick="deleteEventFunc(' + id + ','+title+')">&#9888; Delete</button></td></tr>';
       }
       table ='<table class="table table-striped mytable"><thead><tr><th>Title</th><th>Description</th><th>Date and Time</th><th>Location</th><th>Submitted By</th><th>Approved</th><th>Options</th></tr></thead><tbody>'+ table +'</tbody></table>';
       document.getElementById("table").innerHTML = table
@@ -198,9 +206,11 @@ ipcRenderer.on('event-data', (event, arg) => {
       document.getElementById("approved-selection").style.display = "none"
       loadedData = loadedData.filter(data => data.accepted > 0);
       for(i; i<loadedData.length; i++){
-        table +='<tr><td class="mytd" style="vertical-align: middle;" scope="row">'+ loadedData[i].title +'</td><td class="mytd" style="vertical-align: middle;">'+ loadedData[i].description +'</td><td class="mytd" style="vertical-align: middle;">'+moment(loadedData[i].datetime).format("DD/MM/YYYY HH:mm")+'</td><td class="mytd" style="vertical-align: middle;">'+loadedData[i].location+'</td></tr>';
+        var id = "'" + arg[i].ID + "'"
+        var title = "'" + arg[i].title + "'"
+        table +='<tr><td class="mytd" style="vertical-align: middle;" scope="row">'+ loadedData[i].title +'</td><td class="mytd" style="vertical-align: middle;">'+ loadedData[i].description +'</td><td class="mytd" style="vertical-align: middle;">'+moment(loadedData[i].datetime).format("DD/MM/YYYY HH:mm")+'</td><td class="mytd" style="vertical-align: middle;">'+loadedData[i].location+'</td><td class="mytd"><button type="submit" style="margin-right: 10px;" class="btn btn-success" onclick="attendEventFunc(' + id + ','+title+')">&check; Confirm Attendence</button></td></tr>';
       }
-      table ='<table class="table table-striped mytable"><thead><tr><th>Title</th><th>Description</th><th>Date and Time</th><th>Location</th></tr></thead><tbody>'+ table +'</tbody></table>';
+      table ='<table class="table table-striped mytable"><thead><tr><th>Title</th><th>Description</th><th>Date and Time</th><th>Location</th><th>Options</th></tr></thead><tbody>'+ table +'</tbody></table>';
       document.getElementById("table").innerHTML = table
       document.getElementById("SearchBox").style.display = "flex"
       document.getElementById("totalEvents").innerHTML = "Total events: " + loadedData.length
@@ -279,7 +289,7 @@ document.getElementById("SearchBoxInput").onkeyup = function(){
     var description = "'" + arg[i].description + "'"
     var datetime = "'" + moment(arg[i].datetime).format("DD/MM/YYYY HH:mm") + "'"
     var location = "'" + arg[i].location + "'"
-    table +='<tr><td class="mytd" style="vertical-align: middle;" scope="row">'+ arg[i].title +'</td><td class="mytd" style="vertical-align: middle;">'+ arg[i].description +'</td><td class="mytd" style="vertical-align: middle;">'+moment(arg[i].datetime).format("DD/MM/YYYY HH:mm")+'</td><td class="mytd" style="vertical-align: middle;">'+arg[i].location+'</td><td class="mytd" style="vertical-align: middle;">'+arg[i].submitted_by+'</td><td class="mytd" style="vertical-align: middle;">'+accepted+'</td><td class="mytd"><button type="button" class="btn btn-info" style="margin-right: 10px;" onclick="editEvent('+ acceptedquotes +','+ title +','+ description +','+ datetime +','+ location +','+ id +')" >&#9998; Edit</button><button type="submit" style="margin-right: 10px;" class="btn btn-danger" onclick="deleteEventFunc(' + id + ','+title+')">&#9888; Delete</button></td></tr>';
+    table +='<tr><td class="mytd" style="vertical-align: middle;" scope="row">'+ arg[i].title +'</td><td class="mytd" style="vertical-align: middle;">'+ arg[i].description +'</td><td class="mytd" style="vertical-align: middle;">'+moment(arg[i].datetime).format("DD/MM/YYYY HH:mm")+'</td><td class="mytd" style="vertical-align: middle;">'+arg[i].location+'</td><td class="mytd" style="vertical-align: middle;">'+arg[i].submitted_by+'</td><td class="mytd" style="vertical-align: middle;">'+accepted+'</td><td class="mytd"><button type="submit" style="margin-right: 10px;" class="btn btn-success" onclick="attendEventFunc(' + id + ','+title+')">&check; Confirm Attendence</button><button type="button" class="btn btn-info" style="margin-right: 10px;" onclick="editEvent('+ acceptedquotes +','+ title +','+ description +','+ datetime +','+ location +','+ id +')" >&#9998; Edit</button><button type="submit" style="margin-right: 10px;" class="btn btn-danger" onclick="deleteEventFunc(' + id + ','+title+')">&#9888; Delete</button></td></tr>';
   }
   table ='<table class="table table-striped mytable"><thead><tr><th>Title</th><th>Description</th><th>Date and Time</th><th>Location</th><th>Submitted By</th><th>Approved</th><th>Options</th></tr></thead><tbody>'+ table +'</tbody></table>';
   document.getElementById("table").innerHTML = table
@@ -287,9 +297,11 @@ document.getElementById("SearchBoxInput").onkeyup = function(){
   } else {
     arg = arg.filter(data => data.accepted > 0);
     for(i; i<arg.length; i++){
-      table +='<tr><td class="mytd" style="vertical-align: middle;" scope="row">'+ arg[i].title +'</td><td class="mytd" style="vertical-align: middle;">'+ arg[i].description +'</td><td class="mytd" style="vertical-align: middle;">'+moment(arg[i].datetime).format("DD/MM/YYYY HH:mm")+'</td><td class="mytd" style="vertical-align: middle;">'+arg[i].location+'</td></tr>';
+      var id = "'" + arg[i].ID + "'"
+      var title = "'" + arg[i].title + "'"
+      table +='<tr><td class="mytd" style="vertical-align: middle;" scope="row">'+ arg[i].title +'</td><td class="mytd" style="vertical-align: middle;">'+ arg[i].description +'</td><td class="mytd" style="vertical-align: middle;">'+moment(arg[i].datetime).format("DD/MM/YYYY HH:mm")+'</td><td class="mytd" style="vertical-align: middle;">'+arg[i].location+'</td><td class="mytd"><button type="submit" style="margin-right: 10px;" class="btn btn-success" onclick="attendEventFunc(' + id + ','+title+')">&check; Confirm Attendence</button></td></tr>';
     }
-    table ='<table class="table table-striped mytable"><thead><tr><th>Title</th><th>Description</th><th>Date and Time</th><th>Location</th></tr></thead><tbody>'+ table +'</tbody></table>';
+    table ='<table class="table table-striped mytable"><thead><tr><th>Title</th><th>Description</th><th>Date and Time</th><th>Location</th><th>Options</th></tr></thead><tbody>'+ table +'</tbody></table>';
     document.getElementById("table").innerHTML = table
     document.getElementById("totalEvents").innerHTML = "Total events: " + arg.length
   }
@@ -319,6 +331,10 @@ function eventAdd() {
 ipcRenderer.send('add-event', details);
 }
 
+function attendEventFunc(id, title) {
+  ipcRenderer.send("attend-event", id, title)
+}
+
 // Members.js:
 
 var loadedData
@@ -344,7 +360,6 @@ ipcRenderer.on('member-data', (event, arg) => {
   document.getElementById("SearchBox").style.display = "flex" 
   document.getElementById("addMember").style.display = "" 
 })
-
 
 function editMemberFunc(usertype, username, email){
   ipcRenderer.send("edit-self?", username)
@@ -459,6 +474,14 @@ function login(){
     `<span class="spinner-border spinner-border-sm" style="margin-right:5px" role="status" aria-hidden="true"></span>Loading...`
   );
 }
+ipcRenderer.on("auto-login", (event, arg)=>{
+    // disable button
+    $("#loginbutton").prop("disabled", true);
+    // add spinner to button
+    $("#loginbutton").html(
+      `<span class="spinner-border spinner-border-sm" style="margin-right:5px" role="status" aria-hidden="true"></span>Loading...`
+    );
+})
 
 ipcRenderer.on('incorrect', (event, arg) => {
   document.getElementById('password').value = ""
@@ -708,7 +731,6 @@ function handleForm(event) {
 let paymentID
 
 ipcRenderer.on("client_secret", (event, clientSecret)=>{
-  console.log(clientSecret)
   paymentID = clientSecret.split("_",2)
   paymentID = paymentID[0]+"_"+paymentID[1]
   
@@ -766,14 +788,74 @@ $("#payments").click(function(){
 
 if (document.title === "Settings"){
   const version = document.getElementById('version');
-    
   ipcRenderer.send('app_version');
+  $("#confirmPassword").keypress(function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      changeUsername()
+     }
+  });
+  $("#confirmNewPassword").keypress(function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      changePassword()
+     }
+  });
+  $("#confirmPasswordEmail").keypress(function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      changeEmail()
+     }
+  });
 };
 
 ipcRenderer.on('app_version', (event, arg) => {
   ipcRenderer.removeAllListeners('app_version');
   version.innerText = 'Version ' + arg.version;
 });
+
+
+function changeUsername() {
+  var details = {
+    username: document.getElementById('newUsername').value,
+    password: document.getElementById('confirmPassword').value
+  }
+  ipcRenderer.send("change-username", details)
+}
+
+ipcRenderer.on("change-username-incorrect", (event,arg) =>{
+  document.getElementById('confirmPassword').value = null
+  document.getElementById('confirmPassword').focus()
+})
+
+function changePassword() {
+  var details = {
+    password: document.getElementById('oldPassword').value,
+    newpassword: document.getElementById('newPassword').value,
+    newPasswordConfirm: document.getElementById('confirmNewPassword').value
+  }
+  ipcRenderer.send("change-password", details)
+}
+
+ipcRenderer.on("change-password-incorrect", (event,arg) =>{
+  document.getElementById('oldPassword').value = null
+  document.getElementById('newPassword').value = null
+  document.getElementById('confirmNewPassword').value = null
+  document.getElementById('oldPassword').focus()
+})
+
+function changeEmail() {
+  var details = {
+    email: document.getElementById('newEmail').value,
+    password: document.getElementById('confirmPasswordEmail').value
+  }
+  ipcRenderer.send("change-email", details)
+}
+
+ipcRenderer.on("change-email-incorrect", (event,arg) =>{
+  document.getElementById('confirmPasswordEmail').value = null
+  document.getElementById('confirmPasswordEmail').focus()
+})
 
 // Accounting.js:
 
@@ -871,8 +953,87 @@ ipcRenderer.on("expend-delete-incorrect", (event,arg) =>{
 })
 
 function loadPaymentsFunc(){
-  
+  document.getElementById("table").innerHTML = '<a class="abs-center-x" style="padding: 8px;font-size: 25px;color: #818181!important;"><span class="spinner-border m-1" style="width: 1.25rem;height: 1.25rem;border-width: .2rem;" role="status" aria-hidden="true"></span>Loading...</a>'
+  ipcRenderer.send("loadPayments")
 }
+
+var paymentsData
+
+ipcRenderer.on("paymentsData",(event,arg)=>{
+  arg = JSON.parse(arg)
+  paymentsData = arg
+  var i=0
+  var table =''; //to store html table
+  for(i; i<arg.length; i++){
+    if (arg[i].inPerson == 0){
+      var inPerson = "No"
+    } else {
+      var inPerson = "Yes"
+    }
+    var ID = "'" + arg[i].id + "'"
+    var description = "'" + arg[i].description + "'"
+    var datetime = "'" + moment(arg[i].date).format("DD/MM/YYYY HH:mm") + "'"
+    var username = "'" + arg[i].username + "'"
+    var amount = "'" + arg[i].amount + "'"
+    var inPerson2 = "'"+inPerson+"'"
+    table +='<tr><td class="mytd" style="vertical-align: middle;" scope="row">'+ arg[i].type +'</td><td class="mytd" style="vertical-align: middle;">'+ arg[i].description +'</td><td class="mytd" style="vertical-align: middle;">'+moment(arg[i].date).format("DD/MM/YYYY HH:mm")+'</td><td class="mytd" style="vertical-align: middle;">'+arg[i].username+'</td><td class="mytd" style="vertical-align: middle;">'+inPerson+'</td><td class="mytd" style="vertical-align: middle;">'+arg[i].amount+'</td><td class="mytd"><button type="button" class="btn btn-info" style="margin-right: 10px;" onclick="editPaymentsFunc('+ description +','+ datetime +','+ username +','+ inPerson2 +','+ amount +','+ ID +')" >&#9998; Edit</button><button type="button" class="btn btn-warning" style="margin-right: 10px;" onclick="viewOnline('+ID+')" >&#128064; View online</button><button type="submit" style="margin-right: 10px;" class="btn btn-danger" onclick="deletePaymentFunc(' + ID + ')">&#9888; Delete/Refund Payment</button></td></tr>';
+  }
+  table ='<table class="table table-striped mytable"><thead><tr><th>Type</th><th>Description</th><th>Datetime</th><th>Username</th><th>Payment in person?</th><th>Amount</th><th>Options</th></tr></thead><tbody>'+ table +'</tbody></table>';
+  document.getElementById("table").innerHTML = table
+  document.getElementById("SearchBox").style.display = "flex" 
+})
+
+function viewOnline(paymentID) {
+  ipcRenderer.send("payment-online", paymentID)
+}
+
+function editPaymentsFunc(description, datetime, username, inPerson, amount, ID) {
+  $('#editPaymentModal').modal('toggle');
+  document.getElementById("descriptionEditPayment").value = description
+  document.getElementById("datetimeEditPayment").value = datetime
+  document.getElementById("inPersonEditPayment").value = inPerson
+  document.getElementById("memberEditPayment").value = username
+  document.getElementById("amountEditPayment").value = amount
+  document.getElementById("paymentID").value = ID
+}
+
+function editPaymentConfirm(){
+  if (document.getElementById("inPersonEditPayment").value == "No"){
+    var inPerson = 0
+  } else {
+    var inPerson = 1
+  }
+  var details = {
+    description: document.getElementById("descriptionEditPayment").value,
+    datetime: moment(document.getElementById("datetimeEditPayment").value,"DD/MM/YYYY HH:mm").format("YYYY-MM-DD HH:mm"),
+    inPerson: inPerson,
+    username: document.getElementById("memberEditPayment").value,
+    amount: document.getElementById("amountEditPayment").value,
+    ID: document.getElementById("paymentID").value
+  }
+  ipcRenderer.send('edit-payment', details);
+}
+
+var deletePaymentID
+function deletePaymentFunc(ID){
+  deletePaymentID = ID
+  $('#deletePaymentModal').modal('toggle');
+  document.getElementById("confirmPasswordPayment").value = null
+  document.getElementById("confirmPasswordPayment").focus()
+}
+
+function deletePaymentConfirm(){
+  var details = {
+    ID: deletePaymentID,
+    password: document.getElementById('confirmPasswordPayment').value
+}
+  ipcRenderer.send("delete-payment", details)
+}
+
+ipcRenderer.on("payment-delete-incorrect", (event,arg) =>{
+  document.getElementById('confirmPasswordPayment').value = null
+  document.getElementById('confirmPasswordPayment').focus()
+})
 
 function addOutgoingFunc() {
   tint()
@@ -922,6 +1083,7 @@ ipcRenderer.on("load-usernames-data",(event,arg)=>{
   }
   document.getElementById("membershipPaymentInputUsername").innerHTML = table
   document.getElementById("memberEditExpend").innerHTML = table
+  document.getElementById("memberEditPayment").innerHTML = table
   document.getElementById("expendInputUsername").innerHTML = table
 })
 
@@ -953,3 +1115,92 @@ function paymentAdd() {
   ipcRenderer.send("payment-add",details)
 }
 
+// Event Attending.js:
+
+var loadedData
+ipcRenderer.on('event-attending-data', (event, arg) => {
+  if (adminCheck == true){
+    document.getElementById("buttons").style.display = "block"
+  }
+  loadedData = JSON.parse(arg)
+  var i=0
+  var table =''; //to store html table
+  for(i; i<loadedData.length; i++){
+    var id = "'" + loadedData[i].username + "'"
+    table +='<tr><td class="mytd" style="vertical-align: middle;">'+ loadedData[i].event_title +'</td><td class="mytd"><button type="submit" style="margin-right: 10px;" class="btn btn-danger" onclick="unAttend(' + id + ')">&#9888; Remove attending status</button></td></tr>';
+  }
+  table ='<table class="table table-striped mytable"><thead><tr><th>Event Title</th><th>Options</th></tr></thead><tbody>'+ table +'</tbody></table>';
+  document.getElementById("table").innerHTML = table
+  document.getElementById("totalEvents").innerHTML = "Total events: " + loadedData.length
+  document.getElementById("SearchBox").style.display = "flex"
+})
+
+if(document.title === "Events Attending"){
+  document.getElementById("SearchBoxInput").onkeyup = function(){
+    var searchTerm = document.getElementById("SearchBoxInput").value
+    if (searchTerm == "") {
+      var arg = loadedData
+    } else {
+      var arg = loadedData.filter(item => item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+    }
+    var i=0
+    var table =''; //to store html table
+    if (allAttend = false){
+      for(i; i<loadedData.length; i++){
+        var id = "'" + loadedData[i].username + "'"
+        table +='<tr><td class="mytd" style="vertical-align: middle;">'+ loadedData[i].event_title +'</td><td class="mytd"><button type="submit" style="margin-right: 10px;" class="btn btn-danger" onclick="unAttend(' + id + ')">&#9888; Remove attending status</button></td></tr>';
+      }
+      table ='<table class="table table-striped mytable"><thead><tr><th>Event Title</th><th>Options</th></tr></thead><tbody>'+ table +'</tbody></table>';
+      document.getElementById("table").innerHTML = table
+      document.getElementById("totalEvents").innerHTML = "Total events: " + loadedData.length
+      document.getElementById("SearchBox").style.display = "flex"
+    } else {
+      for(i; i<loadedData.length; i++){
+        var id = "'" + loadedData[i].username + "'"
+        table +='<tr><td class="mytd" style="vertical-align: middle;">'+ loadedData[i].event_title +'</td><td class="mytd" style="vertical-align: middle;">'+ loadedData[i].username +'</td></tr>';
+      }
+      table ='<table class="table table-striped mytable"><thead><tr><th>Event Title</th><th>Username</th></tr></thead><tbody>'+ table +'</tbody></table>';
+      document.getElementById("table").innerHTML = table
+      document.getElementById("totalEvents").innerHTML = "Total events: " + loadedData.length
+      document.getElementById("SearchBox").style.display = "flex"
+    }
+  }
+}
+
+var allAttend = false
+function loadAllAttend() {
+  document.getElementById("buttons").style.display = "none"
+  document.getElementById("SearchBox").style.display = "none"
+  document.getElementById("totalEvents").innerHTML = ""
+  document.getElementById("table").innerHTML = '<a class="abs-center-x" style="padding: 8px;font-size: 25px;color: #818181!important;"><span class="spinner-border m-1" style="width: 1.25rem;height: 1.25rem;border-width: .2rem;" role="status" aria-hidden="true"></span>Loading...</a>'
+  allAttend = true
+  ipcRenderer.send("load-all-attending")
+}
+
+function loadPersonalAttend(){
+  document.getElementById("buttons").style.display = "none"
+  document.getElementById("SearchBox").style.display = "none"
+  document.getElementById("totalEvents").innerHTML = ""
+  document.getElementById("table").innerHTML = '<a class="abs-center-x" style="padding: 8px;font-size: 25px;color: #818181!important;"><span class="spinner-border m-1" style="width: 1.25rem;height: 1.25rem;border-width: .2rem;" role="status" aria-hidden="true"></span>Loading...</a>'
+  allAttend = false;
+  ipcRenderer.send('event-attending-ready')
+}
+
+ipcRenderer.on("event-attending-data-all", (event, arg) => {
+  loadedData = JSON.parse(arg)
+  var i=0
+  var table =''; //to store html table
+  for(i; i<loadedData.length; i++){
+    var id = "'" + loadedData[i].username + "'"
+    table +='<tr><td class="mytd" style="vertical-align: middle;">'+ loadedData[i].event_title +'</td><td class="mytd" style="vertical-align: middle;">'+ loadedData[i].username +'</td></tr>';
+  }
+  table ='<table class="table table-striped mytable"><thead><tr><th>Event Title</th><th>Username</th></tr></thead><tbody>'+ table +'</tbody></table>';
+  document.getElementById("table").innerHTML = table
+  document.getElementById("totalEvents").innerHTML = "Total events: " + loadedData.length
+  document.getElementById("buttons").style.display = "block"
+  document.getElementById("SearchBox").style.display = "flex"
+})
+
+function unAttend(id) {
+  ipcRenderer.send("un-attend", id)
+}

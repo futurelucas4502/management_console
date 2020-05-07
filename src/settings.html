@@ -50,8 +50,9 @@
           <i style="color: #818181!important;font-size: 17.5px;cursor:pointer;" class="fa fa-chevron-right"></i>
         </div>
         <div id="dropdown2" style="overflow:hidden;padding: 0;display:none;" aria-labelledby="events">
+          <a style="cursor:pointer;background-color: #F0F0F0" href="event_attending.html">Events Attending</a>
           <a style="cursor:pointer;background-color: #F0F0F0" onclick="addEvent()" data-toggle="modal" data-target="#addEventModal">Add event</a>
-          </div>
+      </div>
       <a href="./main.html">Main</a>
       <a href="./messaging.html">Messaging</a>
       <a href="./settings.html">Settings</a>
@@ -206,6 +207,75 @@
 </div>
 <!-- End Membership Payment modal -->
 
+<!-- Change Username -->
+<div class="card text-center" style="margin: 35px;">
+  <div class="card-header">
+    Change Details:
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Change username:</h5>
+    <form class="card-text">
+      <div class="form-group">
+        <label for="newUsername">Enter your new username:</label>
+        <input type="text" class="form-control" id="newUsername">
+        <label style="margin-top: .5rem;" for="confirmPassword">Enter your password to confirm your identity:</label>
+        <input type="password" class="form-control" id="confirmPassword">
+      </div>
+    </form>
+  </div>
+  <div class="card-footer text-muted">
+    <button type="submit" onclick="changeUsername();return false" class="btn btn-success">Change</button>
+  </div>
+</div>
+<!-- End Change username -->
+
+<!-- Change Password -->
+<div class="card text-center" style="margin: 35px;">
+  <div class="card-header">
+    Change Details:
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Change password:</h5>
+    <form class="card-text">
+      <div class="form-group">
+        <label for="oldPassword">Enter your current password:</label>
+        <input type="password" class="form-control" id="oldPassword">
+        <label style="margin-top: .5rem;" for="newPassword">Enter a new password:</label>
+        <input type="password" class="form-control" id="newPassword">
+        <label style="margin-top: .5rem;" for="confirmNewPassword">And again:</label>
+        <input type="password" class="form-control" id="confirmNewPassword">
+      </div>
+    </form>
+  </div>
+  <div class="card-footer text-muted">
+    <button type="submit" onclick="changePassword();return false" class="btn btn-success">Change</button>
+  </div>
+</div>
+<!-- End Change password -->
+
+<!-- Change Email -->
+<div class="card text-center" style="margin: 35px;">
+  <div class="card-header">
+    Change Details:
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Change email:</h5>
+    <form class="card-text">
+      <div class="form-group">
+        <label for="newEmail">Enter your new email:</label>
+        <input type="text" class="form-control" id="newEmail">
+        <label style="margin-top: .5rem;" for="confirmPasswordEmail">Enter your password to confirm your identity:</label>
+        <input type="password" class="form-control" id="confirmPasswordEmail">
+      </div>
+    </form>
+  </div>
+  <div class="card-footer text-muted">
+    <button type="submit" onclick="changeEmail();return false" class="btn btn-success">Change</button>
+  </div>
+</div>
+<!-- End Change email -->
+
+<!-- Update check -->
 <div class="card text-center" style="margin: 35px;">
   <div class="card-header">
     About application:
@@ -216,10 +286,9 @@
     <a style="color: #fff !important;" onclick="ipcRenderer.send('update-check')" class="btn btn-primary">Check for updates</a>
   </div>
   <div id="version" class="card-footer text-muted">
-
   </div>
 </div>
-
+<!-- End Update check -->
 
 <tint id="tint" class="tinthidden" onclick="tint()"></tint>
 <script type="text/javascript" src="./js/index.js"></script>

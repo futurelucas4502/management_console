@@ -41,8 +41,9 @@
             <i style="color: #818181!important;font-size: 17.5px;cursor:pointer;" class="fa fa-chevron-right"></i>
           </div>
           <div id="dropdown2" style="overflow:hidden;padding: 0;display:none;" aria-labelledby="events">
+            <a style="cursor:pointer;background-color: #F0F0F0" href="event_attending.html">Events Attending</a>
             <a style="cursor:pointer;background-color: #F0F0F0" onclick="addEvent()" data-toggle="modal" data-target="#addEventModal">Add event</a>
-            </div>
+        </div>
         <a href="./main.html">Main</a>
         <a href="./messaging.html">Messaging</a>
         <a href="./settings.html">Settings</a>
@@ -294,7 +295,7 @@
             <label for="membershipPaymentInput">Form of payment</label>
             <select class="form-control" id="membershipPaymentInput" required="true">
               <option>Donation</option>
-              <option>Membership payment</option>
+              <option>Membership Payment</option>
               <option>Other</option>
             </select>
           </div>
@@ -398,6 +399,86 @@
   </div>
 </div>
 <!-- End delete expend modal -->
+
+<!-- Edit payment modal -->
+<div class="modal fade" id="editPaymentModal" tabindex="-1" role="dialog" aria-labelledby="editPaymentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editPaymentModalLabel">Edit Payment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="editPaymentModal" onsubmit="editPaymentConfirm()">
+            <div id="paymentID" style="display:none;"></div>
+          <div class="form-group">
+            <label for="descriptionEditPayment">Description</label>
+            <textarea class="form-control" id="descriptionEditPayment" required="true" placeholder="Description"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="datetimepicker6">Date and Time</label>
+            <div class="input-group date" id="datetimepicker6" data-target-input="nearest">
+              <input placeholder="" type="text" id="datetimeEditPayment" class="form-control datetimepicker-input" data-target="#datetimepicker6"/>
+              <div class="input-group-append" data-target="#datetimepicker6" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inPersonEditPayment">Was this payment in person?</label>
+            <select class="form-control" id="inPersonEditPayment" required="true">
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+          </div>
+          <div id="membershipPaymentInputForm" class="form-group">
+            <label for="memberEditPayment">Which member is this a payment from?</label>
+            <select class="form-control" id="memberEditPayment" required="true">
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="amountEditPayment">Amount</label>
+            <input class="form-control" id="amountEditPayment" type="text" required="true" placeholder="Amount">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Edit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End edit payment modal -->
+
+<!-- Delete payment modal -->
+<div class="modal fade" id="deletePaymentModal" tabindex="-1" role="dialog" aria-labelledby="deletePaymentModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deletePaymentModalTitle">Are you sure you want to delete/refund this payment?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="deletePayment" onsubmit="deletePaymentConfirm();return false">
+          <div class="form-group">
+            <label for="confirmPasswordPayment">Enter your password:</label>
+            <input type="password" class="form-control" id="confirmPasswordPayment">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Delete</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End delete payment modal -->
 
 <div id="table"><a class="abs-center-x" style="padding: 8px;font-size: 25px;color: #818181!important;"><span class="spinner-border m-1" style="width: 1.25rem;height: 1.25rem;border-width: .2rem;" role="status" aria-hidden="true"></span>Loading...</a></div>
 
