@@ -25,14 +25,11 @@ jobs:
 
       - name: notify-discord-setvar
         if: ${{ job.status }} == "success"
-        env:
-          windows-status: "Successfully built The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows"
+        run: echo "::set-env name=windows-status::Successfully built The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows"
         if: ${{ job.status }} == "failure"
-        env:
-          windows-status: "Failed to build The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows"
+        run: echo "::set-env name=windows-status::Failed to build The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows"
         if: ${{ job.status }} == "cancel"
-        env:
-          windows-status: "Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows was cancelled"
+        run: echo "::set-env name=windows-status::Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows was cancelled"
       
       - name: Discord notification Windows
       env:
@@ -61,14 +58,11 @@ jobs:
       
       - name: notify-discord-setvar
         if: ${{ job.status }} == "success"
-        env:
-          mac-status: "Successfully built The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for macOS"
+        run: echo "::set-env name=mac-status::Successfully built The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for macOS"
         if: ${{ job.status }} == "failure"
-        env:
-          mac-status: "Failed to build The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for macOS"
+        run: echo "::set-env name=mac-status::Failed to build The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for macOS"
         if: ${{ job.status }} == "cancel"
-        env:
-          mac-status: "Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for macOS was cancelled"
+        run: echo "::set-env name=mac-status::Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for macOS was cancelled"
 
       - name: Discord notification macOS
       env:
@@ -97,14 +91,11 @@ jobs:
 
       - name: notify-discord-setvar
         if: ${{ job.status }} == "success"
-        env:
-          ubuntu-status: "Successfully built The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for linux"
+        run: echo "::set-env name=ubuntu-status::Successfully built The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for ubuntu"
         if: ${{ job.status }} == "failure"
-        env:
-          ubuntu-status: "Failed to build The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for linux"
+        run: echo "::set-env name=ubuntu-status::Failed to build The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for ubuntu"
         if: ${{ job.status }} == "cancel"
-        env:
-          ubuntu-status: "Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for linux was cancelled"
+        run: echo "::set-env name=ubuntu-status::Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for ubuntu was cancelled"
 
       - name: Discord notification Ubuntu
       env:
