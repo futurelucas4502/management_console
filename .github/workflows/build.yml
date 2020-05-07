@@ -7,15 +7,13 @@ on:
       - master
 
 jobs:
-  Get-Version:
+  Windows-Build:
+    runs-on: windows-latest
     steps:
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.0.0
 
-  Windows-Build:
-    runs-on: windows-latest
-    steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
 
