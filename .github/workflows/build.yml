@@ -7,21 +7,21 @@ on:
       - master
 
 jobs:
-  Ubuntu-Get-Version:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v1
-
-      - name: get-npm-version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@v1.0.0
-
   Ubuntu-Build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
+
+      - name: Get version number
+        run: |
+          PACKAGE_VERSION=$(cat package.json \
+          | grep version \
+          | head -1 \
+          | awk -F: '{ print $2 }' \
+          | sed 's/[",]//g' \
+          | tr -d '[[:space:]]')
+          echo "::set-env name=version_num::$PACKAGE_VERSION"
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
@@ -42,7 +42,7 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
           job: Build
-          description: The City of Truro Mariners - Management Console V ${{ steps.package-version.outputs.current-version}} for ubuntu
+          description: The City of Truro Mariners - Management Console V $PACKAGE_VERSION for ubuntu
           nofail: false
           nodetail: false
           color: 0x0000FF
@@ -74,7 +74,7 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
           job: Build
-          description: The City of Truro Mariners - Management Console V ${{ steps.package-version.outputs.current-version}} for windows
+          description: The City of Truro Mariners - Management Console V $PACKAGE_VERSION for windows
           nofail: false
           nodetail: false
           color: 0x0000FF
@@ -106,7 +106,7 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
           job: Build
-          description: The City of Truro Mariners - Management Console V ${{ steps.package-version.outputs.current-version}} for macOS
+          description: The City of Truro Mariners - Management Console V $PACKAGE_VERSION for macOS
           nofail: false
           nodetail: false
           color: 0x0000FF
