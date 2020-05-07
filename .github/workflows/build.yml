@@ -7,33 +7,6 @@ on:
       - master
 
 jobs:
-  Ubuntu-Build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v1
-
-      - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
-
-      - name: Build/release Electron app
-        run: |
-          npm install
-          npm run-script release
-
-      - name: notify-discord-setvar
-        if: ${{ job.status }} == "success"
-        env:
-          ubuntu-status: "Successfully built The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for linux"
-        if: ${{ job.status }} == "failure"
-        env:
-          ubuntu-status: "Failed to build The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for linux"
-        if: ${{ job.status }} == "cancel"
-        env:
-          ubuntu-status: "Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for linux was cancelled"
-
   Windows-Build:
     runs-on: windows-latest
     steps:
@@ -60,6 +33,15 @@ jobs:
         if: ${{ job.status }} == "cancel"
         env:
           windows-status: "Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for windows was cancelled"
+      
+      - name: Discord notification Windows
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        DISCORD_USERNAME: Discord CI
+        DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
+      uses: Ilshidur/action-discord@master
+        with:
+          args: ${{ windows-status }}
 
   macOS-Build:
     runs-on: macos-latest
@@ -88,27 +70,7 @@ jobs:
         env:
           mac-status: "Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for macOS was cancelled"
 
-  Discord-Notify:
-    steps:
-      - name: Discord notification
-      env:
-        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        DISCORD_USERNAME: Discord CI
-        DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
-      uses: Ilshidur/action-discord@master
-        with:
-          args: ${{ ubuntu-status }}
-
-      - name: Discord notification
-      env:
-        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        DISCORD_USERNAME: Discord CI
-        DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
-      uses: Ilshidur/action-discord@master
-        with:
-          args: ${{ windows-status }}
-
-      - name: Discord notification
+      - name: Discord notification macOS
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         DISCORD_USERNAME: Discord CI
@@ -116,3 +78,39 @@ jobs:
       uses: Ilshidur/action-discord@master
         with:
           args: ${{ mac-status }}
+
+  Ubuntu-Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Build/release Electron app
+        run: |
+          npm install
+          npm run-script release
+
+      - name: notify-discord-setvar
+        if: ${{ job.status }} == "success"
+        env:
+          ubuntu-status: "Successfully built The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for linux"
+        if: ${{ job.status }} == "failure"
+        env:
+          ubuntu-status: "Failed to build The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for linux"
+        if: ${{ job.status }} == "cancel"
+        env:
+          ubuntu-status: "Build for The City of Truro Mariners - Management Console V ${{ github.event.release.tag_name }} for linux was cancelled"
+
+      - name: Discord notification Ubuntu
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        DISCORD_USERNAME: Discord CI
+        DISCORD_AVATAR: https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png
+      uses: Ilshidur/action-discord@master
+        with:
+          args: ${{ ubuntu-status }}
