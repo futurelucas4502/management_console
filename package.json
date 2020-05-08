@@ -36,7 +36,7 @@
       "category": "public.app-category.productivity",
       "icon": "build/icon-mac.png"
     },
-    "linux":{
+    "linux": {
       "target": "appImage",
       "icon": "build/icon-mac.png"
     },

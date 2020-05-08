@@ -23,22 +23,6 @@ jobs:
           npm install
           npm run-script release
 
-      - name: Post status to Discord
-        uses: sarisia/actions-status-discord@v1
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        if: always()
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          status: ${{ job.status }}
-          job: Build
-          description: The City of Truro Mariners - Management Console Ubuntu
-          nofail: false
-          nodetail: false
-          color: 0xFFFFFF
-          username: Discord CI
-          avatar_url: "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
-
   Windows-Build:
     runs-on: windows-latest
     steps:
@@ -55,22 +39,6 @@ jobs:
           npm install
           npm run-script release
 
-      - name: Post status to Discord
-        uses: sarisia/actions-status-discord@v1
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        if: always()
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          status: ${{ job.status }}
-          job: Build
-          description: The City of Truro Mariners - Management Console Windows
-          nofail: false
-          nodetail: false
-          color: 0xFFFFFF
-          username: Discord CI
-          avatar_url: "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
-
   macOS-Build:
     runs-on: macos-latest
     steps:
@@ -86,19 +54,3 @@ jobs:
         run: |
           npm install
           npm run release
-      
-      - name: Post status to Discord
-        uses: sarisia/actions-status-discord@v1
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        if: always()
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          status: ${{ job.status }}
-          job: Build
-          description: The City of Truro Mariners - Management Console macOS
-          nofail: false
-          nodetail: false
-          color: 0xFFFFFF
-          username: Discord CI
-          avatar_url: "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
