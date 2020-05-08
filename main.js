@@ -22,9 +22,6 @@ var messagesNotificationClick = false
 // create an empty array
 var array = [];
 const gotTheLock = app.requestSingleInstanceLock()
-if (process.platform === 'linux') {
-  app.commandLine.appendSwitch('--no-sandbox')
-}
 
  
 contextMenu({}); // Creates default right click menu
