@@ -1,7 +1,7 @@
 {
   "name": "management-console",
   "productName": "The City Of Truro Mariners - Management Console",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "license": "MIT",
   "author": "Lucas Wilson <lucaswilson4502@outlook.com>",
   "main": "main.js",
@@ -36,11 +36,12 @@
       "category": "public.app-category.productivity",
       "icon": "build/icon-mac.png"
     },
-    "linux":{
+    "linux": {
       "target": "appImage",
       "icon": "build/icon-mac.png"
     },
     "dmg": {
+      "artifactName": "${productName}.${ext}",
       "contents": [
         {
           "x": 110,
@@ -55,9 +56,11 @@
       ]
     },
     "appImage": {
+      "artifactName": "${productName}.${ext}",
       "license": "LICENSE"
     },
     "nsis": {
+      "artifactName": "${productName}.${ext}",
       "createDesktopShortcut": "always",
       "license": "LICENSE"
     },

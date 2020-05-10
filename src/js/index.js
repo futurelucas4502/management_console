@@ -1118,6 +1118,7 @@ function paymentAdd() {
 // Event Attending.js:
 
 var loadedData
+var allAttend = false
 ipcRenderer.on('event-attending-data', (event, arg) => {
   if (adminCheck == true){
     document.getElementById("buttons").style.display = "block"
@@ -1126,7 +1127,7 @@ ipcRenderer.on('event-attending-data', (event, arg) => {
   var i=0
   var table =''; //to store html table
   for(i; i<loadedData.length; i++){
-    var id = "'" + loadedData[i].username + "'"
+    var id = "'" + loadedData[i].id + "'"
     table +='<tr><td class="mytd" style="vertical-align: middle;">'+ loadedData[i].event_title +'</td><td class="mytd"><button type="submit" style="margin-right: 10px;" class="btn btn-danger" onclick="unAttend(' + id + ')">&#9888; Remove attending status</button></td></tr>';
   }
   table ='<table class="table table-striped mytable"><thead><tr><th>Event Title</th><th>Options</th></tr></thead><tbody>'+ table +'</tbody></table>';
@@ -1141,33 +1142,32 @@ if(document.title === "Events Attending"){
     if (searchTerm == "") {
       var arg = loadedData
     } else {
-      var arg = loadedData.filter(item => item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      var arg = loadedData.filter(item => item.event_title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
     }
     var i=0
     var table =''; //to store html table
-    if (allAttend = false){
-      for(i; i<loadedData.length; i++){
-        var id = "'" + loadedData[i].username + "'"
-        table +='<tr><td class="mytd" style="vertical-align: middle;">'+ loadedData[i].event_title +'</td><td class="mytd"><button type="submit" style="margin-right: 10px;" class="btn btn-danger" onclick="unAttend(' + id + ')">&#9888; Remove attending status</button></td></tr>';
+    if (allAttend == false){
+      for(i; i<arg.length; i++){
+        var id = "'" + arg[i].id + "'"
+        table +='<tr><td class="mytd" style="vertical-align: middle;">'+ arg[i].event_title +'</td><td class="mytd"><button type="submit" style="margin-right: 10px;" class="btn btn-danger" onclick="unAttend(' + id + ')">&#9888; Remove attending status</button></td></tr>';
       }
       table ='<table class="table table-striped mytable"><thead><tr><th>Event Title</th><th>Options</th></tr></thead><tbody>'+ table +'</tbody></table>';
       document.getElementById("table").innerHTML = table
-      document.getElementById("totalEvents").innerHTML = "Total events: " + loadedData.length
+      document.getElementById("totalEvents").innerHTML = "Total events: " + arg.length
       document.getElementById("SearchBox").style.display = "flex"
     } else {
-      for(i; i<loadedData.length; i++){
-        var id = "'" + loadedData[i].username + "'"
-        table +='<tr><td class="mytd" style="vertical-align: middle;">'+ loadedData[i].event_title +'</td><td class="mytd" style="vertical-align: middle;">'+ loadedData[i].username +'</td></tr>';
+      for(i; i<arg.length; i++){
+        var id = "'" + arg[i].id + "'"
+        table +='<tr><td class="mytd" style="vertical-align: middle;">'+ arg[i].event_title +'</td><td class="mytd" style="vertical-align: middle;">'+ arg[i].username +'</td></tr>';
       }
       table ='<table class="table table-striped mytable"><thead><tr><th>Event Title</th><th>Username</th></tr></thead><tbody>'+ table +'</tbody></table>';
       document.getElementById("table").innerHTML = table
-      document.getElementById("totalEvents").innerHTML = "Total events: " + loadedData.length
+      document.getElementById("totalEvents").innerHTML = "Total events: " + arg.length
       document.getElementById("SearchBox").style.display = "flex"
     }
   }
 }
 
-var allAttend = false
 function loadAllAttend() {
   document.getElementById("buttons").style.display = "none"
   document.getElementById("SearchBox").style.display = "none"
