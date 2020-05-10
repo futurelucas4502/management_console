@@ -1234,6 +1234,24 @@ ipcMain.on("attend-event", (event, id, title) => {
         });
       }
     }
+    if (body == "Already Attending"){
+      win.reload()
+      if (!dialogOpen){
+        dialogOpen = true
+        return dialog.showMessageBox(win,{type: 'info',buttons: ['OK'],title: 'Already Attending',message: 'You are already attending this event!'}).then(response => {
+          dialogOpen = false
+        });
+      }
+    }
+    if (body == "Success"){
+      win.reload()
+      if (!dialogOpen){
+        dialogOpen = true
+        return dialog.showMessageBox(win,{type: 'info',buttons: ['OK'],title: 'Attend status success',message: 'Adding attending status was successful!'}).then(response => {
+          dialogOpen = false
+        });
+      }
+    }
   })
 })
 
@@ -1292,6 +1310,15 @@ ipcMain.on("un-attend", (event, id) => {
         });
       }
     }
+    if (body == "Success"){
+      win.reload()
+      if (!dialogOpen){
+        dialogOpen = true
+        return dialog.showMessageBox(win,{type: 'info',buttons: ['OK'],title: 'Remove status success',message: 'Removing attending status was successful!'}).then(response => {
+          dialogOpen = false
+        });
+      }
+    }
   })
 })
 
@@ -1325,15 +1352,17 @@ ipcMain.on("change-username", (event, arg) => {
           });
         }
       }
-      try {keytar.deletePassword("The City Of Truro Mariners - Management Console", currentusername)} catch {}
-      currentusername = arg.username
-      win.reload()
-      if (!dialogOpen){
+      if (body == "Success"){
+        try {keytar.deletePassword("The City Of Truro Mariners - Management Console", currentusername)} catch {}
+        currentusername = arg.username
+        win.reload()
+        if (!dialogOpen){
           dialogOpen = true
           return dialog.showMessageBox(win,{type: 'info',buttons: ['OK'],title: 'Success',message: 'Your username was successfully changed!'}).then(response => {
             dialogOpen = false
           });
         }
+      }
   })} else {
     if (!dialogOpen){
       dialogOpen = true
@@ -1375,6 +1404,7 @@ ipcMain.on("change-password", (event, arg) => {
           });
         }
       }
+      if (body == "Success"){
         var checkRemembered = keytar.findCredentials("The City Of Truro Mariners - Management Console")
         checkRemembered.then((result)=>{
           if (result.length != 0) {
@@ -1383,13 +1413,14 @@ ipcMain.on("change-password", (event, arg) => {
             try {keytar.setPassword("The City Of Truro Mariners - Management Console", currentusername, currentpassword)} catch {}
           }
         })
-      win.reload()
-      if (!dialogOpen){
+        win.reload()
+        if (!dialogOpen){
           dialogOpen = true
           return dialog.showMessageBox(win,{type: 'info',buttons: ['OK'],title: 'Success',message: 'Your password was successfully changed!'}).then(response => {
             dialogOpen = false
           });
         }
+      }
   })} else {
     if (!dialogOpen){
       dialogOpen = true
@@ -1423,13 +1454,15 @@ ipcMain.on("change-email", (event, arg) => {
           });
         }
       }
-      win.reload()
-      if (!dialogOpen){
+      if (body == "Success"){
+        win.reload()
+        if (!dialogOpen){
           dialogOpen = true
           return dialog.showMessageBox(win,{type: 'info',buttons: ['OK'],title: 'Success',message: 'Your email was successfully changed!'}).then(response => {
             dialogOpen = false
           });
         }
+      }
   })} else {
     if (!dialogOpen){
       dialogOpen = true

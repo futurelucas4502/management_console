@@ -41,6 +41,7 @@
       "icon": "build/icon-mac.png"
     },
     "dmg": {
+      "artifactName": "${productName}.${ext}",
       "contents": [
         {
           "x": 110,
@@ -55,9 +56,11 @@
       ]
     },
     "appImage": {
+      "artifactName": "${productName}.${ext}",
       "license": "LICENSE"
     },
     "nsis": {
+      "artifactName": "${productName}.${ext}",
       "createDesktopShortcut": "always",
       "license": "LICENSE"
     },
