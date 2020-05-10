@@ -202,6 +202,7 @@ ipcMain.on('restart_app', () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 if (!gotTheLock) {
+  log.info('App already running switching to app now...');
   app.quit()
 } else {
   app.on('second-instance', (event, commandLine, workingDirectory) => {
