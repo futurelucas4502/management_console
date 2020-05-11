@@ -178,7 +178,7 @@ autoUpdater.on('error', (err) => {
   sendStatusToWindow('Update error.');
 })
 autoUpdater.on('download-progress', (event, bytesPerSecond, percent, total, transferred) => {
-  sendStatusToWindow('Download Progress: ' + event.percent + '%');
+  sendStatusToWindow('Download Progress: ' + ((event.percent+"").split("."))[0] + '%');
   win.setProgressBar(event.percent / 100);
 })
 autoUpdater.on('update-downloaded', (info) => {
