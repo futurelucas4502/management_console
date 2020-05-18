@@ -22,6 +22,7 @@ var messagesNotificationClick = false
 // create an empty array
 var array = [];
 const gotTheLock = app.requestSingleInstanceLock()
+const { exec } = require('child_process');
 
  
 contextMenu({}); // Creates default right click menu
@@ -80,7 +81,8 @@ function createWindow () {
     }
   });
 
-  tray = new Tray(path.join(__dirname, 'assets','images','tray-icon.png'))
+  const createTray = () =>{
+    tray = new Tray(path.join(__dirname, 'assets','images','tray-icon.png'))
   tray.setToolTip("The City Of Truro Mariners - Management Console")
   tray.setContextMenu(Menu.buildFromTemplate([{
     label: 'Open', click:  function(){
@@ -93,13 +95,45 @@ function createWindow () {
       win.destroy()
       app.quit()
     }}]))
-    
+  }
+  createTray()
   tray.on("click",(event,arg)=>{
       win.show();
       if (process.platform === 'darwin') {
         app.dock.show()
       }
   })
+
+  const monitorTray = () => {
+    if (process.platform !== 'linux') {
+      return;
+    }
+  
+    /* Here we check if the screen has been locked and unlocked.
+      If the monitor returns SCREEN_UNLOCKED, then that has to be our case
+      And we destroy and recreate the tray
+    */
+    const monitor = exec(`
+      dbus-monitor --session "type='signal',interface='org.gnome.ScreenSaver'" |
+      while read x; do
+      case "$x" in 
+        *"boolean true"*) echo SCREEN_LOCKED;;
+        *"boolean false"*) echo SCREEN_UNLOCKED;;  
+      esac
+      done
+    `);
+  
+    monitor.stdout.on('data', (data) => {
+      const out = data.toString().trim();
+      if (out === 'SCREEN_UNLOCKED') {
+        tray.destroy();
+        createTray();
+      }
+    });
+  };
+  
+  monitorTray();
+
   var checkRemembered = keytar.findCredentials("The City Of Truro Mariners - Management Console")
   checkRemembered.then((result)=>{
     if (result.length != 0) {
