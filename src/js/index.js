@@ -586,7 +586,8 @@ ipcRenderer.on("messages-data", (event, arg, currentusername, messagesent, jump,
           case "data:image/svg+xml;base64":
             table +='<tr><td class="mytd" style="background-color:#AED3FF;vertical-align: middle;color: #43474A!important;font-size:17px;line-height: 1.5;min-height: 50px;padding: .75rem;" scope="row"><image style="max-width:100%;" src="'+ arg[i].message +'"></td><td  class="mytd" style="vertical-align: middle;color: #43474A!important;font-size:17px;line-height: 1.15;width: 80px;text-align:center;" scope="row">'+read+'</td></tr>';
             break;
-          case "data:application/x-zip-compressed;base64" || "data:application/zip;base64":
+          case "data:application/x-zip-compressed;base64":
+          case "data:application/zip;base64":
             var messageFile = "'" + arg[i].message + "'"
             table +='<tr><td class="mytd" onclick="downloadfile('+messageFile+')" style="background-color:#AED3FF;vertical-align: middle;color: #43474A!important;font-size:17px;line-height: 1.5;min-height: 50px;padding: .75rem;cursor:pointer;" scope="row">Download File</td><td  class="mytd" style="vertical-align: middle;color: #43474A!important;font-size:17px;line-height: 1.15;width: 80px;text-align:center;" scope="row">'+read+'</td></tr>';
             extension = "zip";
@@ -611,7 +612,8 @@ ipcRenderer.on("messages-data", (event, arg, currentusername, messagesent, jump,
           case "data:image/svg+xml;base64":
             table +='<tr><td class="mytd" style="background-color:lightgrey;vertical-align: middle;color: #43474A!important;font-size:17px;line-height: 1.5;min-height: 50px;padding: .75rem;" scope="row"><image style="max-width:100%;" src="'+ arg[i].message +'"></td><td  class="mytd" style="vertical-align: middle;color: #43474A!important;font-size:17px;line-height: 1.15;width: 80px;text-align:center;" scope="row"></td></tr>';
             break;
-          case "data:application/x-zip-compressed;base64" || "data:application/zip;base64":
+          case "data:application/x-zip-compressed;base64":
+          case "data:application/zip;base64":
             var messageFile = "'" + arg[i].message + "'"
             table +='<tr><td class="mytd" onclick="downloadfile('+messageFile+')" style="background-color:lightgrey;vertical-align: middle;color: #43474A!important;font-size:17px;line-height: 1.5;min-height: 50px;padding: .75rem;cursor:pointer;" scope="row">Download File</td><td  class="mytd" style="vertical-align: middle;color: #43474A!important;font-size:17px;line-height: 1.15;width: 80px;text-align:center;" scope="row"></td></tr>';
             extension = "zip";
