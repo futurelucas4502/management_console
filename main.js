@@ -42,7 +42,8 @@ log.info('App starting...');
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 800, height: 700,
+    width: 800,
+    height: 700,
     show: false,
     webPreferences: {
       nodeIntegration: true,
@@ -50,8 +51,7 @@ function createWindow () {
     }
   })
 
-  // and load the login.html of the app.
-  win.loadFile(path.join(__dirname, 'src','login.html'))
+  if (process.platform === 'linux') win.setIcon(path.join(__dirname, "assets","images","icon-linux.png"))
 
   if (isDev) {
     // connectionurl = "http://localhost/my-app/" // Development
@@ -150,6 +150,9 @@ function createWindow () {
           messageNotify()
         }, 10000);
       })
+    } else {
+      // and load the login.html of the app.
+      win.loadFile(path.join(__dirname, 'src','login.html'))
     }
     win.show()
     if (process.platform === 'darwin') {
@@ -178,7 +181,7 @@ autoUpdater.on('error', (err) => {
   sendStatusToWindow('Update error.');
 })
 autoUpdater.on('download-progress', (event, bytesPerSecond, percent, total, transferred) => {
-  sendStatusToWindow('Download Progress: ' + event.percent + '%');
+  sendStatusToWindow('Download Progress: ' + ((event.percent+"").split("."))[0] + '%');
   win.setProgressBar(event.percent / 100);
 })
 autoUpdater.on('update-downloaded', (info) => {
