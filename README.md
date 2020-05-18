@@ -1,4 +1,7 @@
 ![Build/release](https://github.com/futurelucas4502/management-console/workflows/Build/release/badge.svg?branch=dev)
+
+The above image references the dev branch whereas the main branch is always stable/passing so is sfae to download and build from.
+
 # City of Truro Mariners - Management Console
 A2 Computer Science coursework for the City of Truro Mariners Model Boat Club
 
