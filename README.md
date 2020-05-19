@@ -17,7 +17,7 @@ https://futurelucas4502.github.io/management-console
 
 http://lucas-testing.000webhostapp.com/
 
-# **NOTE**:
+# **Note**:
 
 All pull requests should be pushed to dev not main
 
