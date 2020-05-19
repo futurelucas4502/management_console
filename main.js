@@ -58,7 +58,7 @@ function createWindow () {
     connectionurl = "https://lucas-testing.000webhostapp.com/" // For testing features specific to interaction with other users
     log.info('Running in development');
   } else {
-    connectionurl = "https://lucas-testing.000webhostapp.com/" // Release
+    connectionurl = "https://thecityoftruromariners.futurelucas4502.co.uk" // Release
     log.info('Running in production');
     // Runs auto updater
     autoUpdater.checkForUpdatesAndNotify();
