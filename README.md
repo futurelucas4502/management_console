@@ -17,6 +17,10 @@ https://futurelucas4502.github.io/management-console
 
 http://lucas-testing.000webhostapp.com/
 
+# **NOTE**:
+
+All pull requests should be pushed to dev not main
+
 ## Contact Details:
 
 Lucas Wilson <lucaswilson4502@outlook.com>
