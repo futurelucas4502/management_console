@@ -176,7 +176,7 @@ function createWindow() {
           win.webContents.send("incorrect")
           if (!dialogOpen) {
             dialogOpen = true
-            return dialog.showMessageBox(win, { type: 'error', buttons: ['OK'], title: 'Unknown Error', message: 'An unknown error eccured please check your internet connection or try and visit https://lucas-testing.000webhostapp.com if it fails your service provider may be blocking us if however you can connect this is likely a server issue if it happens repeatedly contact me at lucaswilson4502@outlook.com' }).then(response => {
+            return dialog.showMessageBox(win, { type: 'error', buttons: ['OK'], title: 'Unknown Error', message: 'An unknown error eccured please check your internet connection or try and visit https://thecityoftruromariners.futurelucas4502.co.uk/ if it fails your service provider may be blocking us if however you can connect this is likely a server issue if it happens repeatedly contact me at lucaswilson4502@outlook.com' }).then(response => {
               dialogOpen = false
             });
           }
@@ -294,7 +294,7 @@ const connectionErrorMessage = {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-//url should be https://lucas-testing.000webhostapp.com not localhost
+//url should be https://thecityoftruromariners.futurelucas4502.co.uk/ not localhost
 
 // generic post code
 
@@ -349,7 +349,7 @@ ipcMain.on('login', (event, arg) => {
       event.sender.send("incorrect")
       if (!dialogOpen) {
         dialogOpen = true
-        return dialog.showMessageBox(win, { type: 'error', buttons: ['OK'], title: 'Unknown Error', message: 'An unknown error eccured please check your internet connection or try and visit https://lucas-testing.000webhostapp.com if it fails your service provider may be blocking us if however you can connect this is likely a server issue if it happens repeatedly contact me at lucaswilson4502@outlook.com' }).then(response => {
+        return dialog.showMessageBox(win, { type: 'error', buttons: ['OK'], title: 'Unknown Error', message: 'An unknown error eccured please check your internet connection or try and visit https://thecityoftruromariners.futurelucas4502.co.uk/ if it fails your service provider may be blocking us if however you can connect this is likely a server issue if it happens repeatedly contact me at lucaswilson4502@outlook.com' }).then(response => {
           dialogOpen = false
         });
       }
