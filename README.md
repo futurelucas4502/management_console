@@ -13,7 +13,7 @@ I had no idea what RPC, Pug.js/Jade.js or EJS was when I made this therefore it 
 
 ## Documentation:
 
-https://futurelucas4502.github.io/management-console
+https://futurelucas4502.github.io/docs/management-console
 
 ## Website:
 
