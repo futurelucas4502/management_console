@@ -85,7 +85,7 @@
     "jquery": "^3.5.0",
     "keytar": "^5.5.0",
     "moment": "^2.24.0",
-    "popper.js": "^1.16.1",
+    "popper.js": "^1.16.1-lts",
     "request": "^2.88.2"
   }
 }
