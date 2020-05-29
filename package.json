@@ -1,7 +1,7 @@
 {
   "name": "management-console",
   "productName": "The City Of Truro Mariners - Management Console",
-  "version": "1.0.36",
+  "version": "1.0.37",
   "license": "MIT",
   "author": "Lucas Wilson <lucaswilson4502@outlook.com>",
   "main": "main.js",
@@ -85,7 +85,7 @@
     "jquery": "^3.5.0",
     "keytar": "^5.5.0",
     "moment": "^2.24.0",
-    "popper.js": "^1.16.1",
+    "popper.js": "^1.16.1-lts",
     "request": "^2.88.2"
   }
 }
