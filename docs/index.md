@@ -1,4 +1,4 @@
-# The City of Truro Mariners - Documentation test
+# The City of Truro Mariners - Documentation
 
 ## Is my OS supported?:
 
