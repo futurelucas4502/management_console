@@ -1,7 +1,3 @@
----
-description: The documentation for my management console's API
----
-
 # The City of Truro Mariners - API Documentation
 
 This will contain all the relevant features and functions of the API if you want code examples see the management console for desktop which uses all of these features
