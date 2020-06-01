@@ -2,7 +2,7 @@
 
 ## How to download the program:
 
-To download the program for Linux visit [here](https://lucas-testing.000webhostapp.com/release/index) and simply press download for linux
+To download the program for Linux visit [here](https://thecityoftruromariners.futurelucas4502.co.uk/release/index) and simply press download for linux
 
 ## How to run the program for Linux:
 
@@ -30,7 +30,7 @@ Then your OS fails to give the sandbox the correct permissions when running howe
 2. Then to launch the application run this (this has to be done every time unless you create a [shortcut](#how-to-create-a-shortcut-if-using-no-sandbox-method)): <br />
     `./The-City-Of-Truro-Mariners---Management-Console.AppImage --no-sandbox`
 
-If that wasn't the response you get feel free to open a bug report/issue on github [here](https://github.com/futurelucas4502/management-console/issues).
+If that wasn't the response you get feel free to open a bug report/issue on github [here](https://github.com/futurelucas4502/management_console/issues).
 
 ### How to create a shortcut if using --no-sandbox method:
 
@@ -52,13 +52,13 @@ or you can open it in any text editor you want
 
 ## How to use the program:
 
-See [here](./how-to-use)
+See [here](https://futurelucas4502.github.io/docs/index.html?docs=management_console&page=how-to-use)
 
 ## Not using Linux:
 
 If your OS is not Linux see the links below:
 
-* [macOS](./macos "macOS Docs")
-* [Windows](./windows "Windows Docs") 32/64 bit
+* [Windows](https://futurelucas4502.github.io/docs/index.html?docs=management_console&page=windows "Windows Docs") 32/64 bit
+* [macOS](https://futurelucas4502.github.io/docs/index.html?docs=management_console&page=macos "macOS Docs")
 
-If your OS or architecture isn't in the above list e.g. windows ARM don't worry you can learn how to build it for your OS [here](./unsupported "Unsupported OS").
+If your OS or architecture isn't in the above list e.g. windows ARM don't worry you can learn how to build it for your OS [here](https://futurelucas4502.github.io/docs/index.html?docs=management_console&page=unsupported "Unsupported OS").
