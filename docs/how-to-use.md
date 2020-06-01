@@ -1,14 +1,3 @@
----
-description: A management console made with Electron.JS for my Computer Science A-Level
-show_downloads: true
-github:
-  is_project_page: true
-  repository_url: https://github.com/futurelucas4502/management-console
-  repository_name: management-console
-  zip_url: https://github.com/futurelucas4502/management-console/zipball/master
-  tar_url: https://github.com/futurelucas4502/management-console/tarball/master
----
-
 # How to use The City of Truro Mariners - Managment Console
 
 ## How to request accesss:
@@ -21,7 +10,7 @@ If you are you will be emailed and an account will be created for you if not and
 
 At first you will be presented with a login screen which will look like this:
 
-![alt text](./assets/images/Login.png "Login Screen")
+![alt text](https://raw.githubusercontent.com/futurelucas4502/management_console/master/docs/assets/images/Login.png "Login Screen")
 
 If you recieved details about the application in an email simply enter the username and password.
 
