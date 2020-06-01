@@ -3,7 +3,7 @@
 So you want to use this application but your OS isn't supported well as long as your on a computer that can run nodejs and electronjs your in luck!
 
 1. Install node.js this can be done via the snapstore if on linux or from [here](https://nodejs.org/en/download/) for other OS's. If you can't see node.js for your OS on the official website or don't know how to install it google is your friend!
-2. Clone or download the repository from [here](https://github.com/futurelucas4502/management-console) (if using zip extract the zip file)
+2. Clone or download the repository from [here](https://github.com/futurelucas4502/management_console) (if using zip extract the zip file)
 3. Open the folder that was cloned/extracted
 4. Open a terminal in the folder and run: <br />
     `npm install`
