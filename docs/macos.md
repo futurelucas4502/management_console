@@ -2,7 +2,7 @@
 
 ## How to download the program:
 
-To download the program for macOS visit [here](https://lucas-testing.000webhostapp.com/release/index) and simply press download for macOS.
+To download the program for macOS visit [here](https://thecityoftruromariners.futurelucas4502.co.uk/release/index) and simply press download for macOS.
 
 ## How to install the program:
 
@@ -21,13 +21,13 @@ In the future this guide may change as I will get codesigning but right now I do
 
 ## How to use the program:
 
-See [here](./how-to-use)
+See [here](https://futurelucas4502.github.io/docs/index.html?docs=management_console&page=how-to-use)
 
 ## Not using macOS:
 
 If your OS is not macOS see the links below:
 
-* [Windows](./windows "Windows Docs") 32/64 bit
-* [Linux](./linux "Linux Docs") that supports AppImage files (most do)
+* [Windows](https://futurelucas4502.github.io/docs/index.html?docs=management_console&page=windows "Windows Docs") 32/64 bit
+* [Linux](https://futurelucas4502.github.io/docs/index.html?docs=management_console&page=linux "Linux Docs") that supports AppImage files (most do)
 
-If your OS or architecture isn't in the above list e.g. windows ARM don't worry you can learn how to build it for your OS [here](./unsupported "Unsupported OS").
+If your OS or architecture isn't in the above list e.g. windows ARM don't worry you can learn how to build it for your OS [here](https://futurelucas4502.github.io/docs/index.html?docs=management_console&page=unsupported "Unsupported OS").
