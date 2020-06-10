@@ -16,4 +16,4 @@ See [here](https://futurelucas4502.github.io/docs/index.html?docs=management_con
 
 ## Want to contribute to the program?
 
-See my API docs [here](https://futurelucas4502.github.io/docs/index.html?docs=management_console&page=api-docs "API Docs")
+See my API docs [here](https://futurelucas4502.github.io/docs/index.html?docs=management_console_API&page=index "API Docs")
