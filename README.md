@@ -1,4 +1,7 @@
-![Build/release](https://github.com/futurelucas4502/management-console/workflows/Build/release/badge.svg?branch=dev)
+![Builds](https://github.com/futurelucas4502/management-console/workflows/Build/release/badge.svg?branch=dev)
+![GitHub issues](https://img.shields.io/github/issues/futurelucas4502/management_console.svg)
+![GitHub license](https://img.shields.io/github/license/futurelucas4502/management_console.svg)
+![GitHub tag](https://img.shields.io/github/tag/futurelucas4502/management_console.svg)
 
 The above image references the [dev branch](https://github.com/futurelucas4502/management-console/tree/dev) whereas the [main branch](https://github.com/futurelucas4502/management-console/tree/master) is always stable/passing so is safe to download and build from.
 
