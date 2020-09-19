@@ -6,6 +6,9 @@
 The above image references the [dev branch](https://github.com/futurelucas4502/management-console/tree/dev) whereas the [main branch](https://github.com/futurelucas4502/management-console/tree/master) is always stable/passing so is safe to download and build from.
 
 # City of Truro Mariners - Management Console
+
+{Depreciated}
+
 A2 Computer Science coursework for the City of Truro Mariners Model Boat Club
 
 API is closed source as it handles payments therefore has private keys etc
